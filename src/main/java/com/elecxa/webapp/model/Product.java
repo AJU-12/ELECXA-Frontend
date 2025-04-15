@@ -1,100 +1,47 @@
 package com.elecxa.webapp.model;
 
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
+import java.util.List;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "products")
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long productId;
+
+    @ManyToOne
+    @JoinColumn(name = "subcategory_id", nullable = false)
+    private SubCategory subcategory;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    @Column(nullable = false)
+    private Integer stockQuantity;
+
+    @Column(length = 1000)
     private String description;
-    private String imageUrl;
-    private String videoUrl;
-    private BigDecimal currentPrice;
-    private BigDecimal originalPrice;
-    private double rating;
-    private int reviewCount;
-    private String categorySlug;
 
-    public Product(String name, String description, String imageUrl, BigDecimal currentPrice, 
-                  BigDecimal originalPrice, double rating, int reviewCount, String categorySlug) {
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.currentPrice = currentPrice;
-        this.originalPrice = originalPrice;
-        this.rating = rating;
-        this.reviewCount = reviewCount;
-        this.categorySlug = categorySlug;
-    }
+    private BigDecimal discount;
 
-    // Getters and Setters
-    public String getName() {
-        return name;
-    }
+    private String brand;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Double rating;
 
-    public String getDescription() {
-        return description;
-    }
+    private Integer warranty; // in months
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-
-    public BigDecimal getCurrentPrice() {
-        return currentPrice;
-    }
-
-    public void setCurrentPrice(BigDecimal currentPrice) {
-        this.currentPrice = currentPrice;
-    }
-
-    public BigDecimal getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(BigDecimal originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public int getReviewCount() {
-        return reviewCount;
-    }
-
-    public void setReviewCount(int reviewCount) {
-        this.reviewCount = reviewCount;
-    }
-
-    public String getCategorySlug() {
-        return categorySlug;
-    }
-
-    public void setCategorySlug(String categorySlug) {
-        this.categorySlug = categorySlug;
-    }
-} 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductAttribute> attributes;
+}
