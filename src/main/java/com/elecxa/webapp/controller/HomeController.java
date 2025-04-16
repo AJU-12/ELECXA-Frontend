@@ -23,14 +23,14 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String showHomePage(Model model) {
-        List<Category> categories = categoryService.getAllCategories();
-        model.addAttribute("categories", categories);
-
-        List<Product> popularProducts = productService.getPopularProducts();
-        model.addAttribute("popularProducts", popularProducts);
-
-        return "index"; // maps to index.html
+    public String showHomePage() {
+//        List<Category> categories = categoryService.getAllCategories();
+//        model.addAttribute("categories", categories);
+//
+//        List<Product> popularProducts = productService.getPopularProducts();
+//        model.addAttribute("popularProducts", popularProducts);
+ 
+        return "indexF"; 
     }
 
     @GetMapping("/products")
@@ -44,6 +44,6 @@ public class HomeController {
                 : productService.getPopularProducts();
 
         model.addAttribute("products", products);
-        return "products"; // maps to products.html
+        return "products-page";
     }
 }

@@ -17,13 +17,13 @@ public class ProductService {
     }
 
     public List<Product> getPopularProducts() {
-        String url = "http://localhost:8080/api/both/products/popular";
+        String url = "http://localhost:8080/api/products";
         Product[] products = restTemplate.getForObject(url, Product[].class);
         return Arrays.asList(products);
     }
 
     public List<Product> getProductsByCategory(String categorySlug) {
-        String url = "http://localhost:8080/api/both/products?category=" + categorySlug;
+        String url = "http://localhost:8080/api/products";
         Product[] products = restTemplate.getForObject(url, Product[].class);
         return Arrays.asList(products);
     }
