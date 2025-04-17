@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,7 +63,7 @@
         </div>
 
         <!-- Checkout Form -->
-        <form id="checkout-form" action="#" method="post">
+        <form id="checkout-form" th:action="@{/checkout/details}" method="post" th:object="${checkoutForm}">
             <!-- Checkout Content -->
             <div class="checkout-content">
                 <!-- Details Panel -->
@@ -71,23 +71,26 @@
                     <!-- Personal Details -->
                     <div class="form-section">
                         <h3 class="panel-title">Your Details</h3>
-                        <a href="#" class="login-link">Already Have an Account? Log in</a>
+                        <a th:href="@{/login}" href="#" class="login-link">Already Have an Account? Log in</a>
                         
                         <div class="form-row">
                             <div class="form-field">
-                                <input type="text" class="input-field" placeholder="Full Name" id="fullname">
+                                <input type="text" class="input-field" placeholder="Full Name" id="fullname" name="fullName" th:value="${checkoutForm.fullName}">
                                 <label for="fullname" class="field-label required">Full Name</label>
+                                <span class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-field">
-                                <input type="email" class="input-field" placeholder="Email" id="email">
+                                <input type="email" class="input-field" placeholder="Email" id="email" name="email" th:value="${checkoutForm.email}">
                                 <label for="email" class="field-label required">Email</label>
+                                <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                             </div>
                             <div class="form-field">
-                                <input type="tel" class="input-field" placeholder="Phone" id="phone">
+                                <input type="tel" class="input-field" placeholder="Phone" id="phone" name="phone" th:value="${checkoutForm.phone}">
                                 <label for="phone" class="field-label required">Phone</label>
+                                <span class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
                             </div>
                         </div>
                     </div>
@@ -98,30 +101,34 @@
                         
                         <div class="form-row">
                             <div class="form-field">
-                                <input type="text" class="input-field" placeholder="Address" id="address">
+                                <input type="text" class="input-field" placeholder="Address" id="address" name="address" th:value="${checkoutForm.address}">
                                 <label for="address" class="field-label required">Address</label>
+                                <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-field">
-                                <input type="text" class="input-field" placeholder="Apartment, suite, etc. (optional)" id="apt">
+                                <input type="text" class="input-field" placeholder="Apartment, suite, etc. (optional)" id="apt" name="apartment" th:value="${checkoutForm.apartment}">
                                 <label for="apt" class="field-label">Apartment, suite, etc.</label>
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-field">
-                                <input type="text" class="input-field" placeholder="Pincode" id="pincode">
+                                <input type="text" class="input-field" placeholder="Pincode" id="pincode" name="pincode" th:value="${checkoutForm.pincode}">
                                 <label for="pincode" class="field-label required">Pincode</label>
+                                <span class="error" th:if="${#fields.hasErrors('pincode')}" th:errors="*{pincode}"></span>
                             </div>
                             <div class="form-field">
-                                <input type="text" class="input-field" placeholder="City" id="city">
+                                <input type="text" class="input-field" placeholder="City" id="city" name="city" th:value="${checkoutForm.city}">
                                 <label for="city" class="field-label required">City</label>
+                                <span class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
                             </div>
                             <div class="form-field">
-                                <input type="text" class="input-field" placeholder="State" id="state">
+                                <input type="text" class="input-field" placeholder="State" id="state" name="state" th:value="${checkoutForm.state}">
                                 <label for="state" class="field-label required">State</label>
+                                <span class="error" th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
                             </div>
                         </div>
                     </div>
@@ -129,22 +136,37 @@
                 
                 <!-- Summary Panel -->
                 <div class="summary-panel">
-                    <div class="product-summary">
-                        <img src="../img/Mobile Phones/image 19.jpg" alt="Samsung Galaxy S24 Ultra" class="product-image">
-                        <h3 class="product-title">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h3>
+                    <div class="product-summary" th:each="item : ${cart.items}">
+                        <img th:src="${item.imageUrl}" th:alt="${item.name}" src="../img/Mobile Phones/image 19.jpg" alt="Samsung Galaxy S24 Ultra" class="product-image">
+                        <h3 class="product-title" th:text="${item.name}">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h3>
                         <div class="product-price">
-                            ₹1,10,999
-                            <span class="original-price">₹1,25,999</span>
+                            ₹<span th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}">1,10,999</span>
+                            <span class="original-price" th:if="${item.originalPrice > 0}">₹<span th:text="${#numbers.formatDecimal(item.originalPrice, 0, 'COMMA', 0, 'POINT')}">1,25,999</span></span>
                         </div>
                         <p class="price-note">(Inclusive of all Taxes)</p>
+                    </div>
+                    
+                    <div class="order-total" th:if="${cart.items.size() > 1}">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span>₹<span th:text="${#numbers.formatDecimal(cart.subtotal, 0, 'COMMA', 0, 'POINT')}">110,999</span></span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax:</span>
+                            <span>₹<span th:text="${#numbers.formatDecimal(cart.tax, 0, 'COMMA', 0, 'POINT')}">0</span></span>
+                        </div>
+                        <div class="total-row total">
+                            <span>Total:</span>
+                            <span>₹<span th:text="${#numbers.formatDecimal(cart.total, 0, 'COMMA', 0, 'POINT')}">110,999</span></span>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <!-- Action Buttons -->
             <div class="button-container">
-                <a href="index.html" class="back-button">Back to Shopping</a>
-                <a href="checkout-final.html" class="proceed-button">Proceed to Final Checkout</a>
+                <a th:href="@{/cart}" href="index.html" class="back-button">Back to Shopping</a>
+                <button type="submit" class="proceed-button">Proceed to Final Checkout</button>
             </div>
         </form>
     </div>
@@ -203,17 +225,16 @@
                     <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
-    </div>
+            </div>
             
             <div class="footer-divider"></div>
             
             <div class="copyright">
                 <p>Elecxa © 2025 All Rights Reserved</p>
-    </div>
-  </div>
+            </div>
+        </div>
     </footer>
 
     <script src="../js/script.js"></script>
-    <script src="../js/checkout-form.js"></script>
 </body>
 </html>
