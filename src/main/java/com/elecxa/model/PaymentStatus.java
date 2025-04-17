@@ -1,4 +1,4 @@
-package com.elecxa.webapp.model;
+package com.elecxa.model;
 
 
 enum PaymentStatus {

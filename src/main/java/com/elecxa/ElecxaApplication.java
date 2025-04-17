@@ -1,4 +1,4 @@
-package com.elecxa.webapp;
+package com.elecxa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

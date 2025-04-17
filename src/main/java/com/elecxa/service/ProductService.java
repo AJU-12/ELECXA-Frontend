@@ -1,8 +1,6 @@
-package com.elecxa.webapp.service;
+package com.elecxa.service;
 
-import com.elecxa.webapp.model.Product;
-import com.elecxa.webapp.model.ProductAttribute;
-
+import com.elecxa.model.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,19 +27,4 @@ public class ProductService {
         Product[] products = restTemplate.getForObject(url, Product[].class);
         return Arrays.asList(products);
     }
-
-	public List<Product> getProductsBysubCategory(String subcategory) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<Product> getProductsById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<ProductAttribute> getProductsAttributes(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
