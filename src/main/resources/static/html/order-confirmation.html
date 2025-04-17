@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELECXA - Order Confirmation</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .confirmation-container {
+            padding: 40px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin: 20px auto 40px;
+            max-width: 800px;
+        }
+        
+        .success-icon {
+            font-size: 64px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        
+        .confirmation-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .confirmation-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .order-details {
+            background-color: rgba(0, 0, 0, 0.02);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .order-number {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .order-date {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .order-summary-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .order-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .item-image {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-right: 15px;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .item-price {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .order-totals {
+            margin-top: 20px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .total-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .total-value {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .grand-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .grand-total-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .grand-total-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .continue-shopping {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .continue-shopping:hover {
+            background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="overlap-group">
+            <a href="index.html"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
+            
+            <div class="header-center">
+                <div class="div">
+                    <div class="menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="text-wrapper-2">Menu</div>
+                </div>
+                <div class="overlap">
+                    <div class="search-normal" style="display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="text-wrapper">Search by Categories, Products</div>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="icon-user">
+                    <a href="profile-new.html">
+                        <i class="fas fa-circle-user"></i>
+                        <span>Account</span>
+                    </a>
+                </div>
+                <div class="icon-cart-alt">
+                    <a href="addcart-new.html">
+                        <i class="fas fa-bag-shopping"></i>
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Confirmation Content -->
+    <div class="confirmation-container">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1 class="confirmation-title">Thank You for Your Order!</h1>
+        <p class="confirmation-message">Your order has been successfully placed. We've sent a confirmation email to your registered email address.</p>
+        
+        <div class="order-details">
+            <div class="order-number">Order #ELCX2024050789</div>
+            <div class="order-date">Placed on <span id="order-date">May 7, 2024</span></div>
+            
+            <h3 class="order-summary-title">Order Summary</h3>
+            <div class="order-item">
+                <img src="../img/Mobile Phones/image 19.jpg" alt="Samsung Galaxy S24 Ultra" class="item-image">
+                <div class="item-details">
+                    <div class="item-name">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</div>
+                    <div class="item-price">₹1,10,999</div>
+                </div>
+            </div>
+            
+            <div class="order-totals">
+                <div class="total-row">
+                    <div class="total-label">Subtotal</div>
+                    <div class="total-value">₹1,10,999</div>
+                </div>
+                <div class="total-row">
+                    <div class="total-label">Shipping</div>
+                    <div class="total-value" id="shipping-display">Free</div>
+                </div>
+                <div class="total-row">
+                    <div class="total-label">Tax</div>
+                    <div class="total-value">₹19,980</div>
+                </div>
+                <div class="grand-total">
+                    <div class="grand-total-label">Total</div>
+                    <div class="grand-total-value" id="total-display">₹1,30,979</div>
+                </div>
+            </div>
+        </div>
+        
+        <a href="index.html" class="continue-shopping">Continue Shopping</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="products-page.html">Products</a></li>
+                        <li><a href="#">Shipping and Returns</a></li>
+                        <li><a href="order-confirmation.html">Track My Order</a></li>
+                        <li><a href="profile-new.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Do You Need Help?</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <h3>Payments Accepted</h3>
+                <div class="payment-icons">
+                    <img src="../img/Footers/image 1.jpg" alt="Visa">
+                    <img src="../img/Footers/image 2.jpg" alt="Mastercard">
+                    <img src="../img/Footers/image 4.jpg" alt="PayPal">
+                    <img src="../img/Footers/image 5.jpg" alt="American Express">
+                    <img src="../img/Footers/image 6.jpg" alt="Apple Pay">
+                    <img src="../img/Footers/image 7.jpg" alt="Google Pay">
+                </div>
+            </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="footer-bottom">
+                <div class="footer-logo">
+                    <img src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA">
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="copyright">
+                <p>Elecxa © 2025 All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date for order
+            const currentDate = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('order-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            
+            // Get order details from sessionStorage if available
+            const shippingCost = sessionStorage.getItem('shippingCost') || '0';
+            const totalCost = sessionStorage.getItem('totalCost') || '110999';
+            const deliveryOption = sessionStorage.getItem('deliveryOption') || 'standard';
+            
+            // Update display
+            const shippingDisplay = document.getElementById('shipping-display');
+            if (shippingDisplay) {
+                shippingDisplay.textContent = shippingCost === '0' ? 'Free' : '₹' + parseInt(shippingCost).toLocaleString('en-IN');
+            }
+            
+            const totalDisplay = document.getElementById('total-display');
+            if (totalDisplay) {
+                // Include tax in total (assuming 19980 is tax amount from checkout page)
+                const tax = 19980;
+                const grandTotal = parseInt(totalCost) + tax;
+                totalDisplay.textContent = '₹' + grandTotal.toLocaleString('en-IN');
+            }
+        });
+    </script>
+</body>
+</html> 
