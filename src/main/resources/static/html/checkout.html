@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELECXA - Checkout</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="overlap-group">
+            <a href="index.html"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
+            
+            <div class="header-center">
+                <div class="div">
+                    <div class="menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="text-wrapper-2">Menu</div>
+                </div>
+                <div class="overlap">
+                    <div class="search-normal" style="display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="text-wrapper">Search by Categories, Products</div>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="icon-user">
+                    <a href="profile-new.html">
+                        <i class="fas fa-circle-user"></i>
+                        <span>Account</span>
+                    </a>
+                </div>
+                <div class="icon-cart-alt">
+                    <a href="addcart-new.html">
+                        <i class="fas fa-bag-shopping"></i>
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Checkout Content -->
+    <div class="checkout-container">
+        <!-- Checkout Progress -->
+        <div class="checkout-progress">
+            <div class="progress-bar"></div>
+            <div class="progress-step active">
+                <span class="progress-step-text">Your Details</span>
+            </div>
+            <div class="progress-step">
+                <span class="progress-step-text">Final Checkout</span>
+            </div>
+            <div class="progress-step">
+                <span class="progress-step-text">Payment</span>
+            </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <form id="checkout-form" action="#" method="post">
+            <!-- Checkout Content -->
+            <div class="checkout-content">
+                <!-- Details Panel -->
+                <div class="details-panel">
+                    <!-- Personal Details -->
+                    <div class="form-section">
+                        <h3 class="panel-title">Your Details</h3>
+                        <a href="#" class="login-link">Already Have an Account? Log in</a>
+                        
+                        <div class="form-row">
+                            <div class="form-field">
+                                <input type="text" class="input-field" placeholder="Full Name" id="fullname">
+                                <label for="fullname" class="field-label required">Full Name</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-field">
+                                <input type="email" class="input-field" placeholder="Email" id="email">
+                                <label for="email" class="field-label required">Email</label>
+                            </div>
+                            <div class="form-field">
+                                <input type="tel" class="input-field" placeholder="Phone" id="phone">
+                                <label for="phone" class="field-label required">Phone</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Address -->
+                    <div class="form-section">
+                        <h3 class="panel-title">Shipping Address</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-field">
+                                <input type="text" class="input-field" placeholder="Address" id="address">
+                                <label for="address" class="field-label required">Address</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-field">
+                                <input type="text" class="input-field" placeholder="Apartment, suite, etc. (optional)" id="apt">
+                                <label for="apt" class="field-label">Apartment, suite, etc.</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-field">
+                                <input type="text" class="input-field" placeholder="Pincode" id="pincode">
+                                <label for="pincode" class="field-label required">Pincode</label>
+                            </div>
+                            <div class="form-field">
+                                <input type="text" class="input-field" placeholder="City" id="city">
+                                <label for="city" class="field-label required">City</label>
+                            </div>
+                            <div class="form-field">
+                                <input type="text" class="input-field" placeholder="State" id="state">
+                                <label for="state" class="field-label required">State</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Summary Panel -->
+                <div class="summary-panel">
+                    <div class="product-summary">
+                        <img src="../img/Mobile Phones/image 19.jpg" alt="Samsung Galaxy S24 Ultra" class="product-image">
+                        <h3 class="product-title">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h3>
+                        <div class="product-price">
+                            ₹1,10,999
+                            <span class="original-price">₹1,25,999</span>
+                        </div>
+                        <p class="price-note">(Inclusive of all Taxes)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="button-container">
+                <a href="index.html" class="back-button">Back to Shopping</a>
+                <a href="checkout-final.html" class="proceed-button">Proceed to Final Checkout</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="products-page.html">Products</a></li>
+                        <li><a href="#">Shipping and Returns</a></li>
+                        <li><a href="order-confirmation.html">Track My Order</a></li>
+                        <li><a href="profile-new.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Do You Need Help?</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <h3>Payments Accepted</h3>
+                <div class="payment-icons">
+                    <img src="../img/Footers/image 1.jpg" alt="Visa">
+                    <img src="../img/Footers/image 2.jpg" alt="Mastercard">
+                    <img src="../img/Footers/image 4.jpg" alt="PayPal">
+                    <img src="../img/Footers/image 5.jpg" alt="American Express">
+                    <img src="../img/Footers/image 6.jpg" alt="Apple Pay">
+                    <img src="../img/Footers/image 7.jpg" alt="Google Pay">
+                </div>
+            </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="footer-bottom">
+                <div class="footer-logo">
+                    <img src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA">
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+    </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="copyright">
+                <p>Elecxa © 2025 All Rights Reserved</p>
+    </div>
+  </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/checkout-form.js"></script>
+</body>
+</html>

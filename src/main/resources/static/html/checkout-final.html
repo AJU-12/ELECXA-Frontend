@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELECXA - Final Checkout</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="overlap-group">
+            <a href="index.html"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
+            
+            <div class="header-center">
+                <div class="div">
+                    <div class="menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="text-wrapper-2">Menu</div>
+                </div>
+                <div class="overlap">
+                    <div class="search-normal" style="display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="text-wrapper">Search by Categories, Products</div>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="icon-user">
+                    <a href="profile-new.html">
+                        <i class="fas fa-circle-user"></i>
+                        <span>Account</span>
+                    </a>
+                </div>
+                <div class="icon-cart-alt">
+                    <a href="addcart-new.html">
+                        <i class="fas fa-bag-shopping"></i>
+                        <span>Cart</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Checkout Content -->
+    <div class="checkout-container">
+        <!-- Checkout Progress -->
+        <div class="checkout-progress">
+            <div class="progress-bar"></div>
+            <div class="progress-step">
+                <span class="progress-step-text">Your Details</span>
+            </div>
+            <div class="progress-step active">
+                <span class="progress-step-text">Final Checkout</span>
+            </div>
+            <div class="progress-step">
+                <span class="progress-step-text">Payment</span>
+            </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <form id="checkout-form" action="#" method="post">
+            <!-- Checkout Content -->
+            <div class="checkout-content">
+                <!-- Details Panel -->
+                <div class="details-panel">
+                    <!-- Review Details -->
+                    <div class="form-section">
+                        <h3 class="panel-title">Review Your Details</h3>
+                        
+                        <div class="review-section">
+                            <h4 class="review-subtitle">Personal Information</h4>
+                            <div class="review-item">
+                                <span class="review-label">Full Name:</span>
+                                <span class="review-value" id="review-fullname">John Doe</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Email:</span>
+                                <span class="review-value" id="review-email">john.doe@example.com</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Phone:</span>
+                                <span class="review-value" id="review-phone">+91 9876543210</span>
+                            </div>
+                        </div>
+                        
+                        <div class="review-section">
+                            <h4 class="review-subtitle">Shipping Address</h4>
+                            <div class="review-item">
+                                <span class="review-label">Address:</span>
+                                <span class="review-value" id="review-address">123 Main Street</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Apartment:</span>
+                                <span class="review-value" id="review-apt">Apt 4B</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">City:</span>
+                                <span class="review-value" id="review-city">Mumbai</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">State:</span>
+                                <span class="review-value" id="review-state">Maharashtra</span>
+                            </div>
+                            <div class="review-item">
+                                <span class="review-label">Pincode:</span>
+                                <span class="review-value" id="review-pincode">400001</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Delivery Options -->
+                    <div class="form-section">
+                        <h3 class="panel-title">Delivery Options</h3>
+                        
+                        <div class="delivery-options">
+                            <div class="delivery-option">
+                                <input type="radio" id="standard" name="delivery" value="standard" checked>
+                                <label for="standard">
+                                    <div class="option-details">
+                                        <span class="option-title">Standard Delivery</span>
+                                        <span class="option-description">3-5 Business Days</span>
+                                    </div>
+                                    <span class="option-price">Free</span>
+                                </label>
+                            </div>
+                            
+                            <div class="delivery-option">
+                                <input type="radio" id="express" name="delivery" value="express">
+                                <label for="express">
+                                    <div class="option-details">
+                                        <span class="option-title">Express Delivery</span>
+                                        <span class="option-description">1-2 Business Days</span>
+                                    </div>
+                                    <span class="option-price">₹299</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Summary Panel -->
+                <div class="summary-panel">
+                    <div class="product-summary">
+                        <img src="../img/Mobile Phones/image 19.jpg" alt="Samsung Galaxy S24 Ultra" class="product-image">
+                        <h3 class="product-title">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h3>
+                        <div class="product-price">
+                            ₹1,10,999
+                            <span class="original-price">₹1,25,999</span>
+                        </div>
+                        <p class="price-note">(Inclusive of all Taxes)</p>
+                    </div>
+                    
+                    <div class="order-summary">
+                        <h3 class="panel-title">Order Summary</h3>
+                        
+                        <div class="summary-item">
+                            <span class="summary-label">Subtotal</span>
+                            <span class="summary-value">₹1,10,999</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Shipping</span>
+                            <span class="summary-value" id="shipping-cost">Free</span>
+                        </div>
+                        <div class="summary-item total">
+                            <span class="summary-label">Total</span>
+                            <span class="summary-value" id="total-cost">₹1,10,999</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="button-container">
+                <a href="checkout.html" class="back-button">Back to Details</a>
+                <a href="checkout-payment.html" class="proceed-button">Proceed to Payment</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="products-page.html">Products</a></li>
+                        <li><a href="#">Shipping and Returns</a></li>
+                        <li><a href="order-confirmation.html">Track My Order</a></li>
+                        <li><a href="profile-new.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Do You Need Help?</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <h3>Payments Accepted</h3>
+                <div class="payment-icons">
+                    <img src="../img/Footers/image 1.jpg" alt="Visa">
+                    <img src="../img/Footers/image 2.jpg" alt="Mastercard">
+                    <img src="../img/Footers/image 4.jpg" alt="PayPal">
+                    <img src="../img/Footers/image 5.jpg" alt="American Express">
+                    <img src="../img/Footers/image 6.jpg" alt="Apple Pay">
+                    <img src="../img/Footers/image 7.jpg" alt="Google Pay">
+                </div>
+            </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="footer-bottom">
+                <div class="footer-logo">
+                    <img src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA">
+                </div>
+                <div class="copyright">
+                    <p>© 2023 ELECXA. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/checkout-final.js"></script>
+</body>
+</html> 
