@@ -2,9 +2,9 @@
 package com.elecxa.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import com.elecxa.model.Category;
+import org.springframework.web.client.RestTemplate;
+import com.elecxa.dto.CategoryDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,9 +18,9 @@ public class CategoryService {
         this.restTemplate = restTemplate;
     }
 
-    public List<Category> getAllCategories() {
+    public List<CategoryDTO> getAllCategories() {
         String url = "http://localhost:8080/api/categories";
-        Category[] categories = restTemplate.getForObject(url, Category[].class);
+        CategoryDTO[] categories = restTemplate.getForObject(url, CategoryDTO[].class);
         return Arrays.asList(categories);
     }
 }

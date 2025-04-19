@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,11 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header Section -->
     <header class="header">
         <div class="overlap-group">
-            <a href="index.html"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
+            <a th:href="@{/}"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
             
             <div class="header-center">
                 <div class="div">
@@ -23,7 +22,7 @@
                     <div class="text-wrapper-2">Menu</div>
                 </div>
                 <div class="overlap">
-                    <div class="search-normal" style="display: flex; align-items: center; justify-content: center;">
+                    <div class="search-normal">
                         <i class="fas fa-search"></i>
                     </div>
                     <div class="text-wrapper">Search by Categories, Products</div>
@@ -32,14 +31,14 @@
 
             <div class="header-right">
                 <div class="icon-user">
-                    <a href="profile-new.html">
-                        <i class="fas fa-circle-user"></i>
+                    <a th:href="@{/profile?id=1}">
+                        <i class="fas fa-user-circle"></i>
                         <span>Account</span>
                     </a>
                 </div>
                 <div class="icon-cart-alt">
-                    <a href="addcart-new.html">
-                        <i class="fas fa-bag-shopping"></i>
+                    <a th:href="@{/cart?id=2}">
+                        <i class="fas fa-shopping-basket"></i>
                         <span>Cart</span>
                     </a>
                 </div>
@@ -47,10 +46,7 @@
         </div>
     </header>
 
-    <!-- Rest of the content remains unchanged -->
-    <!-- Hero Section -->
     <section class="hero">
-        <!-- Swiper -->
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -82,7 +78,7 @@
             <div class="categories-wrapper">
                 <div class="category-grid">
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Mobiles' , id=1)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
                                 <img src="../img/Categories Logos/smartphone (1).png" alt="Mobiles">
                             </div>
@@ -90,7 +86,7 @@
                         </a>
                     </div>
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Laptops' , id=2)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
                                 <img src="../img/Categories Logos/laptop.png" alt="Laptops">
                             </div>
@@ -98,7 +94,7 @@
                         </a>
                     </div>
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Televisions', id=3)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
                                 <img src="../img/Categories Logos/television (1).png" alt="Televisions">
                             </div>
@@ -106,7 +102,7 @@
                         </a>
                     </div>
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Home Appliances', id=4)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
                                 <img src="../img/Categories Logos/electric-appliance.png" alt="Home Appliances">
                             </div>
@@ -114,7 +110,7 @@
                         </a>
                     </div>
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Audio Devices', id=5)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
                                 <img src="../img/Categories Logos/home-theater.png" alt="Audio Devices">
                             </div>
@@ -122,24 +118,23 @@
                         </a>
                     </div>
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Wearables', id=6)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
                                 <img src="../img/Categories Logos/sport-watch (1).png" alt="Wearables">
                             </div>
                             <p>Wearables</p>
                         </a>
                     </div>
-                    <!-- New Categories -->
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Gaming', id=7)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
-                                <img src="../img/Categories Logos/game-controller.png" alt="Gaming">
+                                <img src="../img/Categories Logos/console.png" alt="Gaming">
                             </div>
-                            <p>Gaming</p>
+                            <p>Gaming</p> 
                         </a>
                     </div>
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Cameras', id=8)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
                                 <img src="../img/Categories Logos/camera.png" alt="Cameras">
                             </div>
@@ -147,7 +142,7 @@
                         </a>
                     </div>
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Smart Home', id=9)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
                                 <img src="../img/Categories Logos/smart-home.png" alt="Smart Home">
                             </div>
@@ -155,9 +150,9 @@
                         </a>
                     </div>
                     <div class="category-item">
-                        <a href="products-page.html" style="text-decoration: none; color: inherit;">
+                        <a th:href="@{/products(category='Accessories', id=10)}" style="text-decoration: none; color: inherit;">
                             <div class="category-icon">
-                                <img src="../img/Categories Logos/accessories.png" alt="Accessories">
+                                <img src="../img/Categories Logos/phone.png" alt="Accessories">
                             </div>
                             <p>Accessories</p>
                         </a>
@@ -192,7 +187,7 @@
                 <div class="product-info">
                     <h3>Mobile Phones</h3>
                     <p>Your ultimate companion for this month's eclipses.</p>
-                    <a href="products-page.html" class="btn-secondary">Discover More</a>
+                    <button class="btn-secondary">Discover More</button>
                 </div>
                 <div class="product-image">
                     <video autoplay loop muted playsinline>
@@ -207,7 +202,7 @@
                 <div class="product-info">
                     <h3>Laptops</h3>
                     <p>Your ultimate companion for this month's eclipses.</p>
-                    <a href="products-page.html" class="btn-secondary">Discover More</a>
+                    <button class="btn-secondary">Discover More</button>
                 </div>
                 <div class="product-image">
                     <video autoplay loop muted playsinline>
@@ -222,7 +217,7 @@
                 <div class="product-info">
                     <h3>Audio Devices</h3>
                     <p>Your ultimate companion for this month's eclipses.</p>
-                    <a href="products-page.html" class="btn-secondary">Discover More</a>
+                    <button class="btn-secondary">Discover More</button>
                 </div>
                 <div class="product-image">
                     <video autoplay loop muted playsinline>
@@ -242,7 +237,7 @@
                 <h2>Explore More Products on Elecxa</h2>
                 <p>Your ultimate companion for this month's eclipses.</p>
                 <div class="center-button">
-                    <a href="products-page.html" id="explore-more-btn" class="btn-primary">Explore More</a>
+                    <button id="explore-more-btn" class="btn-primary">Explore More</button>
                 </div>
             </div>
         </div>
@@ -270,10 +265,10 @@
                 <div class="footer-column">
                     <h3>Shop</h3>
                     <ul>
-                        <li><a href="products-page.html">Products</a></li>
+                        <li><a href="#">How to Order</a></li>
                         <li><a href="#">Shipping and Returns</a></li>
-                        <li><a href="order-confirmation.html">Track My Order</a></li>
-                        <li><a href="profile-new.html">My Account</a></li>
+                        <li><a href="#">Track My Order</a></li>
+                        <li><a href="#">My Account</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">

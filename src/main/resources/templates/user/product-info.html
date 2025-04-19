@@ -13,7 +13,7 @@
     <!-- Header Section -->
     <header class="header">
         <div class="overlap-group">
-            <a href="index.html"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
+            <a th:href="@{/}"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
             
             <div class="header-center">
                 <div class="div">
@@ -23,7 +23,7 @@
                     <div class="text-wrapper-2">Menu</div>
                 </div>
                 <div class="overlap">
-                    <div class="search-normal" style="display: flex; align-items: center; justify-content: center;">
+                    <div class="search-normal">
                         <i class="fas fa-search"></i>
                     </div>
                     <div class="text-wrapper">Search by Categories, Products</div>
@@ -32,14 +32,14 @@
 
             <div class="header-right">
                 <div class="icon-user">
-                    <a href="profile-new.html">
-                        <i class="fas fa-circle-user"></i>
+                    <a th:href="@{/profile?id=1}">
+                        <i class="fas fa-user-circle"></i>
                         <span>Account</span>
                     </a>
                 </div>
                 <div class="icon-cart-alt">
-                    <a href="addcart-new.html">
-                        <i class="fas fa-bag-shopping"></i>
+                    <a th:href="@{/cart?id=2}">
+                        <i class="fas fa-shopping-basket"></i>
                         <span>Cart</span>
                     </a>
                 </div>
@@ -51,20 +51,21 @@
     <div class="product-info-container">
         <!-- Breadcrumb Navigation -->
         <div class="breadcrumb">
-            <a href="index.html">Home</a>
-            <a th:href="@{/category/{categoryId}(categoryId=${product.category.id})}" th:text="${product.category.name}">Mobile Phones</a>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/products(category=${categoryname} , id=${categoryId})}" th:text="${subcategory}">Mobile Phones</a>
             <span th:text="${product.name}">Samsung Galaxy S24 Ultra</span>
         </div>
 
         <div class="product-content">
             <!-- Product Image Section -->
             <div class="product-image-container">
-                <div class="main-image-wrapper">
+             <!--   <div class="main-image-wrapper">
                     <img th:src="@{${product.mainImage}}" th:alt="${product.name}" class="main-product-image">
                     <div class="zoom-lens"></div>
                     <button class="wishlist-btn"><i class="far fa-heart"></i></button>
                     <div class="product-badge" th:if="${product.isNew}">New</div>
                 </div>
+                 
                 
                 <div class="product-thumbnails">
                     <button class="thumb-nav prev"><i class="fas fa-chevron-left"></i></button>
@@ -75,12 +76,12 @@
                              th:class="${status.index == 0 ? 'active' : ''}">
                     </div>
                     <button class="thumb-nav next"><i class="fas fa-chevron-right"></i></button>
-                </div>
+                </div> -->
                 
                 <!-- Action Buttons moved here -->
                 <div class="action-buttons">
                     <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    <a th:href="@{/checkout(productId=${product.id})}" class="buy-now"><i class="fas fa-bolt"></i> Buy Now</a>
+                    <a th:href="@{/checkout(productId=${product.productId})}" class="buy-now"><i class="fas fa-bolt"></i> Buy Now</a>
                 </div>
                 
                 <div class="product-share">
@@ -95,12 +96,12 @@
             <!-- Product Details Section -->
             <div class="product-details">
                 <div class="product-badge-container">
-                    <span class="badge in-stock" th:if="${product.inStock}"><i class="fas fa-check-circle"></i> In Stock</span>
-                    <span class="badge out-of-stock" th:unless="${product.inStock}"><i class="fas fa-times-circle"></i> Out of Stock</span>
-                    <span class="badge best-seller" th:if="${product.isBestSeller}">Best Seller</span>
+                    <span class="badge in-stock" th:if="${product.stockQuantity > 0}"><i class="fas fa-check-circle"></i> In Stock</span>
+                    <span class="badge out-of-stock" th:unless="${product.stockQuantity}"><i class="fas fa-times-circle"></i> Out of Stock</span>
+                    <span class="badge best-seller" th:if="${product.rating > 4.5}">Best Seller</span>
                 </div>
                 
-                <h1 class="product-title" th:text="${product.fullName}">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h1>
+                <h1 class="product-title" th:text="${product.name}">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h1>
                 
                 <div class="product-rating">
                     <div class="stars">
@@ -108,19 +109,18 @@
                            th:class="${star <= product.rating ? 'fas fa-star' : 'far fa-star'}"></i>
                         <span th:text="${product.rating}">5</span>
                     </div>
-                    <div class="review-count" th:text="'(' + ${product.reviewCount} + ' Reviews)'"></div>
                 </div>
 
                 <div class="product-price">
-                    ₹<span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}">1,10,999</span>
-                    <span class="original-price" th:if="${product.originalPrice > product.price}">
-                        ₹<span th:text="${#numbers.formatDecimal(product.originalPrice, 0, 'COMMA', 0, 'POINT')}">1,25,999</span>
+                    ₹<span th:text="${#numbers.formatDecimal(product.price - ((product.discount/100)* product.price), 0, 'COMMA', 0, 'POINT')}">1,10,999</span>
+                    <span class="original-price">
+                        ₹<span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}">1,25,999</span>
                     </span>
-                    <span class="discount-badge" th:if="${product.discountPercentage > 0}" 
-                          th:text="${product.discountPercentage + '% OFF'}">12% OFF</span>
+                    <span class="discount-badge" th:if="${product.discount > 0}" 
+                          th:text="${product.discount + '% OFF'}">12% OFF</span>
                 </div>
                 
-                <!-- Product Options -->
+                <!-- Product Options 
                 <div class="product-options">
                     <div class="option-group" th:if="${not #lists.isEmpty(product.colorOptions)}">
                         <h3 class="option-title">Brand Color</h3>
@@ -156,8 +156,8 @@
                         <span th:text="${feature.name}">1 Year Warranty</span>
                     </div>
                 </div>
-
-                <!-- Redesigned Specifications Section -->
+-->
+                <!-- Redesigned Specifications Section
                 <div class="specifications">
                     <h3 class="specs-title">Specifications</h3>
                     
@@ -204,6 +204,7 @@
                         </table>
                     </div>
                 </div>
+                 -->
             </div>
         </div>
     </div>

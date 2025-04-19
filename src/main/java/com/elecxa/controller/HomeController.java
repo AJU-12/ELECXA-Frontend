@@ -1,7 +1,7 @@
 package com.elecxa.controller;
 
-import com.elecxa.model.Category;
-import com.elecxa.model.Product;
+import com.elecxa.dto.CategoryDTO;
+import com.elecxa.dto.ProductDTO;
 import com.elecxa.service.CategoryService;
 import com.elecxa.service.ProductService;
 import org.springframework.stereotype.Controller;
@@ -23,27 +23,41 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String showHomePage() {
-//        List<Category> categories = categoryService.getAllCategories();
-//        model.addAttribute("categories", categories);
-//
-//        List<Product> popularProducts = productService.getPopularProducts();
-//        model.addAttribute("popularProducts", popularProducts);
- 
-        return "indexF"; 
+    public String showHomePage( Model model) {
+        return "user/index"; 
+    }
+    
+    @GetMapping("/signin")
+    public String showLoginPage( Model model) {
+        return "user/sign-in"; 
     }
 
+
     @GetMapping("/products")
-    public String showProductsByCategory(@RequestParam(required = false) String category, Model model) {
+    public String showProductsByCategory(@RequestParam(required = false) String category,@RequestParam(required = false) Integer id , Model model) {
         if (category != null) {
             model.addAttribute("categoryName", category);
         }
 
-        List<Product> products = (category != null)
-                ? productService.getProductsByCategory(category)
+        List<ProductDTO> products = (category != null)
+                ? productService.getProductsByCategory(category , id)
                 : productService.getPopularProducts();
 
         model.addAttribute("products", products);
-        return "products-page";
+        return "user/products-page";
+    }
+    
+    @GetMapping("subcategory/products")
+    public String showProductsBySubCategory(@RequestParam(required = false) String subcategory,@RequestParam(required = false) Integer id , Model model) {
+        if (subcategory != null) {
+            model.addAttribute("categoryName", subcategory);
+        }
+
+        List<ProductDTO> products = (subcategory != null)
+                ? productService.getProductsBysubCategory(subcategory , id)
+                : productService.getPopularProducts();
+
+        model.addAttribute("products", products);
+        return "user/products-page";
     }
 }

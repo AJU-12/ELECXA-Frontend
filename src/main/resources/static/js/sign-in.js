@@ -518,7 +518,7 @@ function handleSignInClick() {
         // Simulate verification (replace with actual API call)
         setTimeout(() => {
             // Successful verification - redirect to home page
-            window.location.href = 'index.html';
+            window.location.href = '/';
             
             // In case of error, show error and reset button
             // showPasswordError('Invalid password. Please try again.');
@@ -955,7 +955,7 @@ function handleVerifyClick() {
         // Simulate verification (replace with actual API call)
         setTimeout(() => {
             // Successful verification - redirect to home page
-            window.location.href = 'index.html';
+            window.location.href = '/';
             
             // In case of error, show error and reset button
             // showToast('Invalid OTP. Please try again.', true);
@@ -1812,7 +1812,7 @@ function handleCreateAccount() {
             
             // Redirect to home page after short delay
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = '/';
             }, 1500);
         }, 1500);
     }

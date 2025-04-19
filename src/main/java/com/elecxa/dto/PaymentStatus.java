@@ -1,4 +1,4 @@
-package com.elecxa.model;
+package com.elecxa.dto;
 
 
 enum PaymentStatus {
