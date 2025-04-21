@@ -157,7 +157,7 @@
                     </div>
                 </div>
 -->
-                <!-- Redesigned Specifications Section
+                <!-- Redesigned Specifications Section -->
                 <div class="specifications">
                     <h3 class="specs-title">Specifications</h3>
                     
@@ -168,43 +168,44 @@
                         <button class="specs-tab" data-tab="camera">Camera</button>
                     </div>
                     
+                 
+                    
                     <div class="specs-content active" id="general-specs">
                         <table class="specs-table">
-                            <tr th:each="spec : ${product.generalSpecs}">
-                                <th th:text="${spec.name}">Brand</th>
-                                <td th:text="${spec.value}">Samsung</td>
+                            <tr th:each="spec : ${generalSpecs}">
+                                <th th:text="${spec.attributeName}">Brand</th>
+                                <td th:text="${spec.attributeValue}">Samsung</td>
                             </tr>
                         </table>
                     </div>
                     
                     <div class="specs-content" id="performance-specs">
                         <table class="specs-table">
-                            <tr th:each="spec : ${product.performanceSpecs}">
-                                <th th:text="${spec.name}">Processor</th>
-                                <td th:text="${spec.value}">Qualcomm Snapdragon 8 Gen 3</td>
+                            <tr th:each="spec : ${performanceSpecs}">
+                                <th th:text="${spec.attributeName}">Processor</th>
+                                <td th:text="${spec.attributeValue}">Qualcomm Snapdragon 8 Gen 3</td>
                             </tr>
                         </table>
                     </div>
                     
                     <div class="specs-content" id="display-specs">
                         <table class="specs-table">
-                            <tr th:each="spec : ${product.displaySpecs}">
-                                <th th:text="${spec.name}">Display Type</th>
-                                <td th:text="${spec.value}">Dynamic AMOLED 2X</td>
+                            <tr th:each="spec : ${displaySpecs}">
+                                <th th:text="${spec.attributeName}">Display Type</th>
+                                <td th:text="${spec.attributeValue}">Dynamic AMOLED 2X</td>
                             </tr>
                         </table>
                     </div>
                     
                     <div class="specs-content" id="camera-specs">
                         <table class="specs-table">
-                            <tr th:each="spec : ${product.cameraSpecs}">
-                                <th th:text="${spec.name}">Main Camera</th>
-                                <td th:text="${spec.value}">200MP, f/1.7, OIS</td>
+                            <tr th:each="spec : ${cameraSpecs}">
+                                <th th:text="${spec.attributeName}">Main Camera</th>
+                                <td th:text="${spec.attributeValue}">200MP, f/1.7, OIS</td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                 -->
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.elecxa.dto.ProductAttributeDTO;
 import com.elecxa.dto.ProductDTO;
 
 import java.util.Arrays;
@@ -67,5 +68,19 @@ public class ProductService {
 
 	        return response.getBody();
 	    }
+
+	public List<ProductAttributeDTO> getProductAttributes(Long id) {
+		String url = "http://localhost:8080/api/attributes/product/{productId}";
+
+        ResponseEntity<List<ProductAttributeDTO>> response = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<List<ProductAttributeDTO>>() {},
+            id
+        );
+
+        return response.getBody();
+	}
 
 }

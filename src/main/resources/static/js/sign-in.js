@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     setupSignInForm();
-    initializeDummyDatabase();
+	 initializeDummyDatabase();
 });
 
 /**
@@ -25,14 +25,22 @@ function initializeDummyDatabase() {
 /**
  * Check if user exists in the dummy database
  */
-function checkUserExists(identifier) {
+async function checkUserExists(credential) {
     // Get users from session storage
-    const users = JSON.parse(sessionStorage.getItem('dummyUsers')) || dummyUsers;
     
-    // Check if identifier matches any email or mobile in the database
-    return users.some(user => 
-        user.email === identifier || user.mobile === identifier
-    );
+	const response = await fetch(`http://localhost:8080/auth/login/${credential}`, {
+	            method: "GET",
+				headers: {
+				   "Content-Type": "application/json"
+				}
+	        });
+
+			
+			if (response.status == 200){
+	            return true;
+	        }
+			return false;
+  
 }
 
 /**
@@ -86,14 +94,10 @@ function setupFieldEvents() {
 /**
  * Handle click on the Continue button
  */
-function handleContinueClick() {
+async function handleContinueClick() {
     const inputField = document.getElementById('user-input');
     
-    if (!inputField || !inputField.value.trim()) {
-        // Show error if input is empty
-        showError('Please enter your mobile number or email');
-        return;
-    }
+    
     
     const inputValue = inputField.value.trim();
     
@@ -116,9 +120,9 @@ function handleContinueClick() {
     showLoading();
     
     // Simulate a server request (replace with actual API call)
-    setTimeout(function() {
+    setTimeout(async function() {
         // Check if user exists in database
-        if (checkUserExists(inputValue)) {
+        if (await checkUserExists(inputValue)) {
             // User exists, show password screen
             showPasswordScreen(inputValue);
         } else {
@@ -131,9 +135,8 @@ function handleContinueClick() {
 /**
  * Show the password screen
  */
-function showPasswordScreen(identifier) {
+async function showPasswordScreen(identifier) {
     const formContainer = document.querySelector('.form-container');
-    const isEmail = identifier.includes('@');
     
     // Create new content for password screen
     const passwordHTML = `
@@ -147,7 +150,7 @@ function showPasswordScreen(identifier) {
             </div>
             
             <div class="form-field password-field">
-                <input type="password" id="password-input" class="input-field" placeholder=" ">
+                <input type="password" id="password-input" class="input-field" placeholder="">
                 <label for="password-input" class="field-label">Enter your password</label>
                 <button class="toggle-password" type="button">
                     <i class="fas fa-eye"></i>
@@ -171,7 +174,7 @@ function showPasswordScreen(identifier) {
             </button>
         </div>
     `;
-    
+
     // Replace form content with password screen
     formContainer.innerHTML = passwordHTML;
     
@@ -180,9 +183,11 @@ function showPasswordScreen(identifier) {
     
     // Setup password field focus and toggle visibility
     setupPasswordField();
-    
+	document.getElementsByClassName('sign-in-button')[0].style.disabled = false;
     // Setup sign in button
-    document.querySelector('.sign-in-button').addEventListener('click', handleSignInClick);
+	document.querySelector('.sign-in-button').addEventListener('click', async () => {
+	    await handleSignInClick(identifier);
+	});
     
     // Setup OTP button - show OTP verification screen when clicked
     document.querySelector('.sign-in-otp-button').addEventListener('click', () => {
@@ -496,15 +501,27 @@ function setupPasswordField() {
 /**
  * Handle sign in button click
  */
-function handleSignInClick() {
-    const passwordInput = document.getElementById('password-input');
+async function handleSignInClick(credential) {
+    const passwordInput = document.getElementById('password-input').value;
     
-    if (!passwordInput || !passwordInput.value.trim()) {
-        // Show error if password is empty
-        showPasswordError('Please enter your password');
-        return;
-    }
+   console.log("sdjnc wj")
+   const response = await fetch(`http://localhost:8080/auth/password/${credential}/${passwordInput}`, {
+       method: "GET",
+       headers: {
+          "Content-Type": "application/json"
+       }
+   });
+
+	 
+	 if(response.status != 200){
+		showError("Invalid Password")
+		return;
+	 }
+
+
     
+	
+	
     // Show loading state
     const signInButton = document.querySelector('.sign-in-button');
     const signInText = document.querySelector('.sign-in-text');
@@ -512,7 +529,6 @@ function handleSignInClick() {
     if (signInButton && signInText) {
         const originalText = signInText.textContent;
         signInText.textContent = 'Signing in...';
-        signInButton.disabled = true;
         signInButton.style.opacity = '0.7';
         
         // Simulate verification (replace with actual API call)
@@ -532,7 +548,7 @@ function handleSignInClick() {
 /**
  * Show password-specific error message
  */
-function showPasswordError(message) {
+async function showPasswordError(message) {
     // Remove existing error message if any
     const existingError = document.querySelector('.password-error-message');
     if (existingError) {
