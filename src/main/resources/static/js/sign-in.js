@@ -512,7 +512,6 @@ async function handleSignInClick(credential) {
        }
    });
 
-	 
 	 if(response.status != 200){
 		showError("Invalid Password")
 		return;
