@@ -102,6 +102,7 @@
                 </div>
                 
                 <h1 class="product-title" th:text="${product.name}">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h1>
+                <img th:src="@{${product.mainImage}}" th:alt="${product.name}" class="main-product-image">
                 
                 <div class="product-rating">
                     <div class="stars">
