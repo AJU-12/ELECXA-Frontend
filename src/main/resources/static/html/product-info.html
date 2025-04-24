@@ -60,7 +60,7 @@
             <!-- Product Image Section -->
             <div class="product-image-container">
                 <div class="main-image-wrapper">
-                    <img th:src="@{${product.mainImage}}" th:alt="${product.name}" class="main-product-image">
+                    <img src="../img/Mobile Phones/image 19.jpg" alt="Mobile Phone" class="main-product-image">
                     <div class="zoom-lens"></div>
                     <button class="wishlist-btn"><i class="far fa-heart"></i></button>
                     <div class="product-badge" th:if="${product.isNew}">New</div>
@@ -80,7 +80,7 @@
                 <!-- Action Buttons moved here -->
                 <div class="action-buttons">
                     <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    <a th:href="@{/checkout(productId=${product.id})}" class="buy-now"><i class="fas fa-bolt"></i> Buy Now</a>
+                    <a href="checkout.html" class="buy-now"><i class="fas fa-bolt"></i> Buy Now</a>
                 </div>
                 
                 <div class="product-share">
