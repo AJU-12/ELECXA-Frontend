@@ -92,12 +92,14 @@ function setupTabs() {
 /**
  * Set up form submission to save user data
  */
-function setupFormSubmission() {
+async function setupFormSubmission() {
     const editButton = document.querySelector('.edit-button');
     
-    editButton.addEventListener('click', function() {
+    editButton.addEventListener('click', async function() {
         // Get form values
-        const fullName = document.getElementById('fullname').value;
+        const firstName = document.getElementById('fullname').value.split(" ")[0];
+		const lastName = document.getElementById('fullname').value.split(" ")[1];
+
         const email = document.getElementById('email').value;
         const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
@@ -107,33 +109,48 @@ function setupFormSubmission() {
         const state = document.getElementById('state').value;
         
         // Validate required fields
-        if (!fullName || !email || !phone || !address || !pincode || !city || !state) {
+        if (!firstName || !lastName || !email || !phone || !address || !pincode || !city || !state) {
             alert('Please fill in all required fields');
             return;
         }
         
         // Create user data object
         const userData = {
-            personalInfo: {
-                fullName,
-                email,
-                phone
-            },
-            shippingAddress: {
-                streetAddress: address,
-                apartment,
-                pincode,
-                city,
-                state
-            }
-        };
+		    "firstName": firstName,
+		    "lastName": lastName,
+		    "email": email,
+		    "phone": phone
+		}
+		
+		const userAddress = {
+					    "streetAddress":address ,
+					    "landmark": apartment,
+					    "pincode": pincode,
+					    "city": city,
+					    "state": state
+		}
+
         
         // Save to sessionStorage
         sessionStorage.setItem('userData', JSON.stringify(userData));
         
-        // Show success message
-        alert('Profile updated successfully!');
-    });
+		await fetch(`/update?id=1`, {
+		            method: 'PUT',
+		            headers: {
+		                'Content-Type': 'application/json'
+		            },
+		            body: JSON.stringify(userProfile)
+		        })
+       
+			await fetch(`/updateaddress?id=1`, {
+						 method: 'PUT',
+						headers: {
+						'Content-Type': 'application/json'
+						},
+						 body: JSON.stringify(userAddress)
+				 })
+	    });
+	
 }
 
 /**

@@ -13,7 +13,7 @@
     <!-- Header Section -->
     <header class="header">
         <div class="overlap-group">
-            <a href="index.html"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
+            <a th:href="@{/}"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
             
             <div class="header-center">
                 <div class="div">
@@ -23,7 +23,7 @@
                     <div class="text-wrapper-2">Menu</div>
                 </div>
                 <div class="overlap">
-                    <div class="search-normal" style="display: flex; align-items: center; justify-content: center;">
+                    <div class="search-normal">
                         <i class="fas fa-search"></i>
                     </div>
                     <div class="text-wrapper">Search by Categories, Products</div>
@@ -32,14 +32,14 @@
 
             <div class="header-right">
                 <div class="icon-user">
-                    <a href="profile-new.html">
-                        <i class="fas fa-circle-user"></i>
+                    <a id="profileLink">
+                        <i class="fas fa-user-circle"></i>
                         <span>Account</span>
                     </a>
                 </div>
                 <div class="icon-cart-alt">
-                    <a href="addcart-new.html">
-                        <i class="fas fa-bag-shopping"></i>
+                    <a id="cartLink">
+                        <i class="fas fa-shopping-basket"></i>
                         <span>Cart</span>
                     </a>
                 </div>
@@ -186,6 +186,7 @@
         </form>
     </div>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-columns">
@@ -248,7 +249,19 @@
             </div>
         </div>
     </footer>
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            
+            const userId = sessionStorage.getItem('userId');
+                if (userId) {
+                    document.getElementById("profileLink").href = "/profile?id=" + userId;
+                    document.getElementById("cartLink").href = "/cart?id=" + userId;
 
+                }                
+            
+        });
+    </script>
     <script src="../js/script.js"></script>
 </body>
 </html> 
