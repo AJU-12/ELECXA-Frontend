@@ -20,6 +20,8 @@ public class ProductDTO {
     private String brand;
     private Double rating;
     private Integer warranty;
+    private String imageUrl;
+
     @JsonIgnore
     private List<ProductAttributeDTO> attributes;
 }

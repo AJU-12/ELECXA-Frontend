@@ -90,6 +90,25 @@
 					</a>
 				</div>
 
+            <!-- Product Details Section -->
+            <div class="product-details">
+                <div class="product-badge-container">
+                    <span class="badge in-stock" th:if="${product.stockQuantity > 0}"><i class="fas fa-check-circle"></i> In Stock</span>
+                    <span class="badge out-of-stock" th:unless="${product.stockQuantity}"><i class="fas fa-times-circle"></i> Out of Stock</span>
+                    <span class="badge best-seller" th:if="${product.rating > 4.5}">Best Seller</span>
+                </div>
+                
+                <h1 class="product-title" th:text="${product.name}">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h1>
+                <img th:src="@{${product.mainImage}}" th:alt="${product.name}" class="main-product-image">
+                
+                <div class="product-rating">
+                    <div class="stars">
+                        <i th:each="star : ${#numbers.sequence(1, 5)}" 
+                           th:class="${star <= product.rating ? 'fas fa-star' : 'far fa-star'}"></i>
+                        <span th:text="${product.rating}">5</span>
+                    </div>
+                </div>
+
 
 				<div class="product-share">
 					<span>Share:</span> <a href="#" class="share-icon"><i
