@@ -24,7 +24,7 @@ public class ProfileService {
         this.restTemplate = builder.build();
     }
 
-    public UserDTO getUserProfile(int id) {
+    public UserDTO getUserProfile(long id) {
         String BACKEND_URL = "http://localhost:8080/api/user/{id}";
         
         ResponseEntity<UserDTO> response = restTemplate.exchange(
@@ -37,7 +37,7 @@ public class ProfileService {
         return response.getBody();
     }
 
-    public void updateUserProfile(UserDTO userProfile , int id) {
+    public void updateUserProfile(UserDTO userProfile , long id) {
         String BACKEND_URL = "http://localhost:8080/api/user";
 
         HttpHeaders headers = new HttpHeaders();

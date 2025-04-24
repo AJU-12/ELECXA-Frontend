@@ -2,6 +2,7 @@ package com.elecxa.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.elecxa.dto.ProductAttributeDTO;
@@ -38,7 +40,7 @@ public class ProductController {
         model.addAttribute("subcategory" , product.getSubcategory().getName());
         model.addAttribute("categoryname" , product.getSubcategory().getCategory().getName());
         model.addAttribute("categoryId" , product.getSubcategory().getCategory().getCategoryId());
-        
+
         List<ProductAttributeDTO> productAttribute = productService.getProductAttributes(id);
         model.addAttribute("generalSpecs" , productAttribute.subList(0, 2));
         model.addAttribute("performanceSpecs" , productAttribute.subList(2, 4));

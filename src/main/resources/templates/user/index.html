@@ -31,13 +31,13 @@
 
             <div class="header-right">
                 <div class="icon-user">
-                    <a th:href="@{/profile?id=1}">
+                    <a id="profileLink">
                         <i class="fas fa-user-circle"></i>
                         <span>Account</span>
                     </a>
                 </div>
                 <div class="icon-cart-alt">
-                    <a th:href="@{/cart?id=2}">
+                    <a id="cartLink">
                         <i class="fas fa-shopping-basket"></i>
                         <span>Cart</span>
                     </a>
@@ -337,6 +337,14 @@
                     disableOnInteraction: false,
                 }
             });
+            
+            const userId = sessionStorage.getItem('userId');
+                if (userId) {
+                    document.getElementById("profileLink").href = "/profile?id=" + userId;
+                    document.getElementById("cartLink").href = "/cart?id=" + userId;
+
+                }                
+            
         });
     </script>
     <script src="../js/script.js"></script>

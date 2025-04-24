@@ -1,6 +1,7 @@
 package com.elecxa.controller;
 
 import java.math.BigDecimal;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.elecxa.dto.CartDTO;
 import com.elecxa.dto.CartItemDTO;
+import com.elecxa.dto.ProductDTO;
 import com.elecxa.service.CartService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/cart")
@@ -24,15 +28,13 @@ public class CartController {
     public String viewCart(Model model , @RequestParam long id) {
         CartDTO cart = cartService.getCart(id);
         List<CartItemDTO> cartItems = cartService.getCartItems(cart.getCartId());
-        model.addAttribute("cartItems", cartItems);
         
         BigDecimal subtotal = BigDecimal.ZERO;
         BigDecimal totalDiscount = BigDecimal.ZERO;
 
         for (CartItemDTO item : cartItems) {
-            subtotal = subtotal.add(item.getPrice()); // total price for each item
+            subtotal = subtotal.add(item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()))); // total price for each item
             totalDiscount = totalDiscount.add(item.getProduct().getDiscount());
-            System.out.println(item);
         }
 
         BigDecimal shipping = BigDecimal.ZERO;
@@ -51,15 +53,29 @@ public class CartController {
     @PostMapping("/update")
     public String updateQuantity(@RequestParam("itemId") Long itemId,
                                  @RequestParam("action") String action,
-                                 Model model) {
+                                 Model model , HttpSession session) {
+    	long id = (long)session.getAttribute("userId");
+
         cartService.updateItemQuantity(itemId, action);
-        return "redirect:/user/addcart-new";  // Redirect back to the cart page
+        return "redirect:/cart?id="+id;  // Redirect back to the cart page
+    }
+    
+    @GetMapping("/addtocart/{productId}")
+    public String updateCart(@PathVariable Long productId, Model model  , HttpSession session) {
+    	System.out.println(session.getAttribute("userId"));
+    	System.out.println(session.getAttribute("userId").getClass());
+
+    	long id = (long)session.getAttribute("userId");
+        cartService.updateCart(productId,id);
+        return "redirect:/products/{productId}";  // Redirect back to the cart page
     }
 
     // Remove an item from the cart
     @GetMapping("/remove")
-    public String removeItem(@RequestParam("itemId") Long itemId) {
+    public String removeItem(@RequestParam("itemId") Long itemId , HttpSession session) {
+    	
+    	long id = (long)session.getAttribute("userId");
         cartService.removeItem(itemId);
-        return "redirect:/user/addcart-new";  // Redirect back to the cart page
+        return "redirect:/cart?id="+id;  // Redirect back to the cart page
     }
 }

@@ -260,13 +260,13 @@
 
             <div class="header-right">
                 <div class="icon-user">
-                    <a th:href="@{/profile?id=1}">
+                    <a id="profileLink">
                         <i class="fas fa-user-circle"></i>
                         <span>Account</span>
                     </a>
                 </div>
                 <div class="icon-cart-alt">
-                    <a th:href="@{/cart?id=2}">
+                    <a id="cartLink">
                         <i class="fas fa-shopping-basket"></i>
                         <span>Cart</span>
                     </a>
@@ -314,13 +314,13 @@
                         <!-- Item Actions -->
                         <div class="cart-item-actions">
                             <form th:action="@{/cart/update}" method="post" class="quantity-control">
-                                <input type="hidden" name="itemId" th:value="${item.product.productId}">
+                                <input type="hidden" name="itemId" th:value="${item.itemId}">
                                 <button type="submit" name="action" value="decrease" class="quantity-btn">-</button>
                                 <input type="text" name="quantity" th:value="${item.quantity}" value="1" class="quantity-input" readonly>
                                 <button type="submit" name="action" value="increase" class="quantity-btn">+</button>
                             </form>
                             
-                            <a th:href="@{/cart/remove(itemId=${item.product.productId})}" href="#" class="remove-btn">
+                            <a th:href="@{/cart/remove(itemId=${item.itemId})}" class="remove-btn">
                                 <i class="fas fa-trash-alt"></i> Remove
                             </a>
                         </div>
@@ -354,7 +354,7 @@
         <span>₹<span th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}">0</span></span>
     </div>
     
-   <a th:href="@{/checkout}" href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+   <a th:href="@{/checkout/}" class="checkout-btn">Proceed to Checkout</a>
     
 </div>
             
@@ -429,6 +429,19 @@
             </div>
         </div>
     </footer>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const userId = sessionStorage.getItem('userId');
+                if (userId) {
+                    document.getElementById("profileLink").href = "/profile?id=" + userId;
+                    document.getElementById("cartLink").href = "/cart?id=" + userId;
+
+                }                
+            
+        });
+    </script>
 
     <script src="../js/script.js"></script>
 </body>

@@ -68,14 +68,15 @@ public class CartService {
     // Remove an item from the cart
     public void removeItem(Long itemId) {
         // Prepare the request URL
-        String url = BASE_URL + "/remove?itemId=" + itemId;
+        String url = BASE_URL + "/remove/{itemId}";
         
         // Make DELETE request to remove item from cart
         restTemplate.exchange(
                 url, // Endpoint to remove item from cart
                 HttpMethod.DELETE,
                 null,
-                Void.class
+                Void.class,
+                itemId
         );
     }
 
@@ -92,5 +93,19 @@ public class CartService {
 	    );
 	    
 	    return response.getBody(); 
+	}
+
+	public void updateCart(Long productId, Long userId) {
+		
+        String url = BASE_URL + "/add/{productId}/{userId}" ;
+
+	        restTemplate.exchange(
+	                url,
+	                HttpMethod.POST,
+	                null,
+	                Void.class,
+	                productId,
+	                userId
+	        );
 	}
 }
