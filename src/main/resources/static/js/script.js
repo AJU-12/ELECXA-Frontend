@@ -63,3 +63,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // which is initialized in the index.html file
 });
 
+// The categories functionality has been moved to the products-page.html file
+
