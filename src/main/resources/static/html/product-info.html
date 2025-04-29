@@ -6,6 +6,7 @@
     <title th:text="${product.name} + ' - ELECXA'">ELECXA - Product Info</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/product-info.css">
+    <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
@@ -16,17 +17,64 @@
             <a href="index.html"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
             
             <div class="header-center">
-                <div class="div">
-                    <div class="menu">
-                        <i class="fas fa-bars"></i>
+-                <div class="search-container">
+                    <form class="search-form">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-bar" placeholder="Search by Categories, Products">
+                        <i class="fas fa-times search-clear"></i>
+                    </form>
+                    
+                    <!-- Search Dropdown -->
+                    <div class="search-dropdown">
+                        <div class="search-dropdown-header">
+                            <h3>What are you looking for?</h3>
+                            <span class="search-dropdown-close"><i class="fas fa-times"></i></span>
+                        </div>
+                        
+                        <!-- Categories Section -->
+                        <div class="search-section">
+                            <h4 class="search-section-title">Popular Categories</h4>
+                            <div class="search-categories">
+                                <div class="search-category">Mobile Phones</div>
+                                <div class="search-category">Laptops</div>
+                                <div class="search-category">Televisions</div>
+                                <div class="search-category">Audio Devices</div>
+                                <div class="search-category">Wearables</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Searches Section -->
+                        <div class="search-section">
+                            <h4 class="search-section-title">Recent Searches</h4>
+                            <ul class="search-suggestions-list recent-searches-list">
+                                <li class="search-suggestion-item">
+                                    <div class="search-suggestion-icon">
+                                        <i class="fas fa-history"></i>
+                                    </div>
+                                    <div class="search-suggestion-text">samsung galaxy</div>
+                                </li>
+                                <li class="search-suggestion-item">
+                                    <div class="search-suggestion-icon">
+                                        <i class="fas fa-history"></i>
+                                    </div>
+                                    <div class="search-suggestion-text">wireless headphones</div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Popular Products Section -->
+                        <div class="search-section">
+                            <h4 class="search-section-title">Popular Products</h4>
+                            <div class="search-popular-products">
+                                <!-- Will be populated via JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Search Results Container -->
+                        <div class="search-results-container">
+                            <!-- Will be filled with search results -->
+                        </div>
                     </div>
-                    <div class="text-wrapper-2">Menu</div>
-                </div>
-                <div class="overlap">
-                    <div class="search-normal" style="display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="text-wrapper">Search by Categories, Products</div>
                 </div>
             </div>
 
@@ -60,7 +108,7 @@
             <!-- Product Image Section -->
             <div class="product-image-container">
                 <div class="main-image-wrapper">
-                    <img th:src="@{${product.mainImage}}" th:alt="${product.name}" class="main-product-image">
+                    <img src="../img/Mobile Phones/image 19.jpg" alt="Mobile Phone" class="main-product-image">
                     <div class="zoom-lens"></div>
                     <button class="wishlist-btn"><i class="far fa-heart"></i></button>
                     <div class="product-badge" th:if="${product.isNew}">New</div>
@@ -80,7 +128,7 @@
                 <!-- Action Buttons moved here -->
                 <div class="action-buttons">
                     <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    <a th:href="@{/checkout(productId=${product.id})}" class="buy-now"><i class="fas fa-bolt"></i> Buy Now</a>
+                    <a href="checkout.html" class="buy-now"><i class="fas fa-bolt"></i> Buy Now</a>
                 </div>
                 
                 <div class="product-share">
@@ -274,5 +322,7 @@
 
     <script src="../js/script.js"></script>
     <script src="../js/product-tabs.js"></script>
+    <script src="../js/search.js"></script>
+    <script src="../js/header-template.js"></script>
 </body>
 </html>
