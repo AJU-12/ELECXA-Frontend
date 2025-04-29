@@ -329,8 +329,11 @@
             
         });
         
-        function initiatePayment(amount) {
-            fetch(`http://localhost:8080/api/payments/initiate?amount=${amount}`, {
+        async function initiatePayment(amount) {
+        	const uid = sessionStorage.getItem("userId");
+        	const cid = sessionStorage.getItem("cartId");
+
+            await fetch(`http://localhost:8080/api/payments/initiate?amount=${amount}`, {
                 method: 'POST'
             })
             .then(response => response.json())
@@ -342,14 +345,28 @@
                     name: "Elecxa Store",
                     description: "Electronics Purchase",
                     order_id: data.orderId,
-                    handler: function (response) {
+                    handler: async function (response) {
                         alert('Payment successful! ID: ' + response.razorpay_payment_id);
-                        // Optionally call your server to save the payment
+                        let response1 = await fetch(`http://localhost:8080/api/orders/place?userId=${uid}&cartId=${cid}&totalAmount=${amount}`,{
+                        	method:"POST",
+                        	 headers: {
+                     	        "Content-Type": "application/json"
+                     	    }
+                        })
+                        
+                        let orderInfo =await response1.json();
+                        
+                        await fetch(`http://localhost:8080/api/payments/save?razorpayOrderId=${response.razorpay_payment_id}&amount=${amount}&userId=${uid}&orderId=${orderInfo.orderId}`,{
+                        	method:"POST",
+                        	 headers: {
+                        	        "Content-Type": "application/json"
+                        	    }
+                        })
                     },
                     prefill: {
-                        name: "Customer Name",
-                        email: "customer@example.com",
-                        contact: "9876543210"
+                        name: "Selva Ganapathi",
+                        email: "2k21cse135@kiot.ac.in",
+                        contact: "9080846517"
                     },
                     theme: {
                         color: "#3399cc"
@@ -360,6 +377,9 @@
             })
             .catch(error => console.error('Error initiating payment:', error));
         }
+        
+        window.initiatePayment = initiatePayment;
+
     </script>
 
 		<script src="../js/script.js"></script>

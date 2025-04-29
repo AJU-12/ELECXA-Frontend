@@ -296,14 +296,14 @@
                 
                 <!-- Cart Items -->
                 <div class="cart-item" th:each="item : ${cartItems}">
-                <!--     <img th:src="${item.imageUrl}" th:alt="${item.name}" src="../img/Mobile Phones/image 19.jpg" alt="Samsung Galaxy S24 Ultra" class="cart-item-image"> --> 
+                     <img th:src="${item.product.imageUrl}" th:alt="${item.product.name}" alt="Samsung Galaxy S24 Ultra" class="cart-item-image"> 
                     
                     <div class="cart-item-details">
                     
                         <h3 th:text="${item.product.name}" class="cart-item-title">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h3>
                         <p class="cart-item-price">
                             ₹<span th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}">1,10,999</span>
-                            <span th:if="${item.price > 0}" class="cart-item-original-price">₹<span th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}">1,25,999</span></span>
+                            <span th:if="${item.price >= 0}" class="cart-item-original-price">₹<span th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}">1,25,999</span></span>
                         </p>
                         
                         <!-- Variant Information --> 
