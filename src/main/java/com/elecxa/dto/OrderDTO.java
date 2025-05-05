@@ -15,4 +15,8 @@ public class OrderDTO {
     private String orderStatus;
     private LocalDateTime orderedDate;
     private LocalDateTime expectedDeliveryDate;
+    private String customerName;
+    private String paymentMethod;
+    private String productName;
+
 }

@@ -2,8 +2,94 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load user details from sessionStorage if available
     loadUserData();
     
-    // Set up tab switching
-    setupTabs();
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.profile-tabs .tab');
+    const profileForm = document.querySelector('.profile-form-container');
+    const ordersContainer = document.querySelector('.orders-container');
+    const ordersList = document.querySelector('.orders-list');
+
+    // Hide orders container by default
+    if (ordersContainer) {
+        ordersContainer.style.display = 'none';
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Show/hide appropriate content
+            const tabName = this.textContent.toLowerCase().trim();
+            
+            if (tabName === 'my orders') {
+                if (profileForm) profileForm.style.display = 'none';
+                if (ordersContainer) ordersContainer.style.display = 'block';
+                if (ordersList) ordersList.style.display = 'block';
+            } else {
+                if (profileForm) profileForm.style.display = 'block';
+                if (ordersContainer) ordersContainer.style.display = 'none';
+                if (ordersList) ordersList.style.display = 'none';
+            }
+        });
+    });
+
+    // Initialize order filtering
+    const filterSelect = document.querySelector('.filter-select');
+    const orderCards = document.querySelectorAll('.order-card');
+    const ordersSubtitle = document.querySelector('.orders-subtitle');
+
+    if (filterSelect) {
+        filterSelect.addEventListener('change', function() {
+            const selectedStatus = this.value;
+            let visibleCount = 0;
+
+            orderCards.forEach(card => {
+                const status = card.querySelector('.order-status').textContent.toLowerCase();
+                
+                if (selectedStatus === 'all' || status === selectedStatus) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Update orders count
+            if (ordersSubtitle) {
+                ordersSubtitle.textContent = `${visibleCount} orders found`;
+            }
+        });
+    }
+
+    // Order tracking functionality
+    const trackButtons = document.querySelectorAll('.track-order-btn');
+    trackButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const orderNumber = this.closest('.order-card').querySelector('.order-number').textContent;
+            trackOrder(orderNumber);
+        });
+    });
+
+    // View details functionality
+    const viewDetailsButtons = document.querySelectorAll('.view-details-btn');
+    viewDetailsButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const orderNumber = this.closest('.order-card').querySelector('.order-number').textContent;
+            viewOrderDetails(orderNumber);
+        });
+    });
+
+    // Cancel order functionality
+    const cancelButtons = document.querySelectorAll('.cancel-order-btn');
+    cancelButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const orderNumber = this.closest('.order-card').querySelector('.order-number').textContent;
+            cancelOrder(orderNumber);
+        });
+    });
     
     // Set up form submission
     setupFormSubmission();
@@ -48,45 +134,6 @@ function loadUserData() {
             input.dispatchEvent(event);
         }
     });
-}
-
-/**
- * Set up tab switching functionality
- */
-function setupTabs() {
-    const tabs = document.querySelectorAll('.tab');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            // Remove active class from all tabs
-            tabs.forEach(t => t.classList.remove('active'));
-            
-            // Add active class to clicked tab
-            this.classList.add('active');
-            
-            // Handle tab content switching (for future implementation)
-            const tabName = this.textContent.trim().toLowerCase();
-            
-            // Save tab state to sessionStorage
-            sessionStorage.setItem('activeProfileTab', tabName);
-            
-            // For now, just show an alert
-            if (tabName !== 'profile') {
-                alert(`The ${tabName} section will be implemented soon!`);
-            }
-        });
-    });
-    
-    // Restore active tab from sessionStorage if available
-    const activeTab = sessionStorage.getItem('activeProfileTab');
-    if (activeTab) {
-        tabs.forEach(tab => {
-            const tabName = tab.textContent.trim().toLowerCase();
-            if (tabName === activeTab) {
-                tab.click();
-            }
-        });
-    }
 }
 
 /**
@@ -206,4 +253,54 @@ function setupFloatingLabels() {
             }
         });
     });
-} 
+}
+
+// Track Order Function
+function trackOrder(orderNumber) {
+    // TODO: Implement actual order tracking logic
+    console.log(`Tracking order: ${orderNumber}`);
+    alert(`Tracking order: ${orderNumber}`);
+}
+
+// View Order Details Function
+function viewOrderDetails(orderNumber) {
+    // TODO: Implement actual order details view logic
+    console.log(`Viewing details for order: ${orderNumber}`);
+    alert(`Viewing details for order: ${orderNumber}`);
+}
+
+// Cancel Order Function
+function cancelOrder(orderNumber) {
+    if (confirm(`Are you sure you want to cancel order ${orderNumber}?`)) {
+        // TODO: Implement actual order cancellation logic
+        console.log(`Cancelling order: ${orderNumber}`);
+        alert(`Order ${orderNumber} has been cancelled.`);
+    }
+}
+
+// Enhanced Order Filtering
+document.addEventListener('DOMContentLoaded', function() {
+    const filterSelect = document.getElementById('orderStatusFilter');
+    if (filterSelect) {
+        filterSelect.addEventListener('change', function() {
+            const status = this.value;
+            const orderCards = document.querySelectorAll('.order-card');
+            
+            orderCards.forEach(card => {
+                if (status === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    const cardStatus = card.getAttribute('data-status');
+                    card.style.display = cardStatus === status ? 'block' : 'none';
+                }
+            });
+
+            // Update the orders count
+            const visibleOrders = document.querySelectorAll('.order-card[style="display: block"]').length;
+            const ordersSubtitle = document.querySelector('.orders-subtitle');
+            if (ordersSubtitle) {
+                ordersSubtitle.textContent = `${visibleOrders} orders found`;
+            }
+        });
+    }
+}); 
