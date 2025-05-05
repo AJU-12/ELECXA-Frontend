@@ -174,10 +174,11 @@ async function showPasswordScreen(identifier) {
 	// Setup OTP button - show OTP verification screen when clicked
 	document.querySelector('.sign-in-otp-button').addEventListener('click', async () => {
 		const response = await fetch(`http://localhost:8080/api/customer/otp/send?phoneNumber=+91${identifier.trim()}`, {
-		            method: "POST",
-		            headers: { "Content-Type": "application/json",
-		             },
-		        });
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 		showVerificationScreen(identifier);
 	});
 
@@ -489,9 +490,9 @@ function setupPasswordField() {
  * Handle sign in button click
  */
 async function handleSignInClick(identifier) {
+
 	const passwordInput = document.getElementById('password-input').value;
 
-	console.log("sdjnc wj")
 	const response = await fetch(`http://localhost:8080/auth/password/${identifier}/${passwordInput}`, {
 		method: "GET",
 		headers: {
@@ -503,36 +504,33 @@ async function handleSignInClick(identifier) {
 		showError("Invalid Password")
 		return;
 	}
-
 	// Show loading state
 	const signInButton = document.querySelector('.sign-in-button');
-	const signInText = document.querySelector('.sign-in-text');
-
+	const signInText = document.getElementsByClassName('sign-in-text')[0];
 	if (signInButton && signInText) {
-		const originalText = signInText.textContent;
 		signInText.textContent = 'Signing in...';
 		signInButton.style.opacity = '0.7';
-		
+
 		let response;
-	    if(identifier.includes("@")){
+		if (identifier.includes("@")) {
 			response = await fetch(`http://localhost:8080/api/user/email/${identifier}`);
 		}
-		else{
+		else {
 			response = await fetch(`http://localhost:8080/api/user/phone/${identifier}`);
 		}
-		
+
 		let data = await response.json();
-		sessionStorage.setItem("userId" , data.userId);
-		
+		sessionStorage.setItem("userId", data.userId);
+
 		let response1 = await fetch(`http://localhost:8080/api/cart/${data.userId}`);
-		 
-	    let data1 = await response1.json();
-		sessionStorage.setItem("cartId" , data1.cartId);
+
+		let data1 = await response1.json();
+		sessionStorage.setItem("cartId", data1.cartId);
 
 		// Simulate verification (replace with actual API call)
 		setTimeout(() => {
 			// Successful verification - redirect to home page
-			
+
 			window.location.href = `/${sessionStorage.getItem("userId")}`;
 
 			// In case of error, show error and reset button
@@ -577,7 +575,7 @@ async function showPasswordError(message) {
  * Show the verification screen
  */
 function showVerificationScreen(identifier) {
-	
+
 
 	const formContainer = document.querySelector('.form-container');
 	const isEmail = identifier.includes('@');
@@ -944,8 +942,9 @@ async function handleResendOTP(identifier) {
 	}
 
 	const response = await fetch(`http://localhost:8080/api/customer/otp/send?phoneNumber=+91${identifier.trim()}`, {
-			method: "POST",
-		    headers: { "Content-Type": "application/json",
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
 		},
 	});
 	// Show toast message
@@ -959,7 +958,7 @@ async function handleResendOTP(identifier) {
  * Handle verify button click
  */
 async function handleVerifyClick(identifier) {
-	
+
 	const otpInputs = document.querySelectorAll('.otp-input');
 	let otp = '';
 	let isComplete = true;
@@ -994,7 +993,7 @@ async function handleVerifyClick(identifier) {
 		}
 		else {
 			document.getElementById("invalidOTP").style.display = "block";
-		}		
+		}
 	}
 }
 

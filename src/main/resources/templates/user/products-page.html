@@ -9,6 +9,7 @@
 <title>ELECXA - Products</title>
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/products-page.css">
+<link rel="stylesheet" href="css/product-info.css">
 <link rel="stylesheet" href="css/search.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,6 +17,7 @@
 	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
 	rel="stylesheet">
 </head>
+
 <body>
 	<!-- Header Section -->
 	<header class="header">
@@ -65,19 +67,15 @@
 			</div>
 
 			<div class="header-right">
-                <div class="icon-user">
-                    <a id="profileLink">
-                        <i class="fas fa-user-circle"></i>
-                        <span>Account</span>
-                    </a>
-                </div>
-                <div class="icon-cart-alt">
-                    <a id="cartLink">
-                        <i class="fas fa-shopping-basket"></i>
-                        <span>Cart</span>
-                    </a>
-                </div>
-            </div>
+				<div class="icon-user">
+					<a id="profileLink"> <i class="fas fa-user-circle"></i> <span>Account</span>
+					</a>
+				</div>
+				<div class="icon-cart-alt">
+					<a id="cartLink"> <i class="fas fa-shopping-basket"></i> <span>Cart</span>
+					</a>
+				</div>
+			</div>
 		</div>
 	</header>
 
@@ -119,28 +117,50 @@
 			<div class="filter-button">Filters</div>
 		</div>
 
-<div class="products-grid">
-	<!-- Loop through products -->
-	<div th:each="product : ${products}" class="product-card">
-		<a th:href="@{/products/{id}(id=${product.productId})}">
-			<div class="wishlist-icon">
-				<img src="/img/Elements/heart.png" alt="Heart">
+		<div class="products-grid">
+			<!-- Loop through products -->
+			<div th:each="product : ${products}" class="product-card">
+				<a th:href="@{/product/{id}(id=${product.productId})}">
+					<div class="wishlist-icon">
+						<img src="/img/Elements/heart.png" alt="Heart">
+					</div>
+					<div class="product-image">
+						<img th:src="@{${product.imageUrl}}" alt="Product Image"
+							class="product-img">
+					</div>
+					<h3 th:text="${product.name}">Product Name</h3>
+
+					<div class="product-rating">
+						<div class="stars">
+							<i th:each="star : ${#numbers.sequence(1, 5)}"
+								th:class="${star <= product.rating ? 'fas fa-star' : 'far fa-star'}"></i>
+							<span th:text="${product.rating}">5</span>
+						</div>
+					</div>
+					<div class="product-details">
+
+
+						<div class="product-price">
+
+
+
+							₹<span
+								th:text="${#numbers.formatDecimal(product.price - ((product.discount/100)* product.price), 0, 'COMMA', 0, 'POINT')}">1,10,999</span>
+							<span class="original-price"> ₹<span
+								th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}">1,25,999</span>
+
+							</span> <span class="discount-badge" style="text-decoration: none; font-size:12px"
+								th:if="${product.discount >= 0}"
+								th:text="${product.discount + '% OFF'}">12% OFF</span>
+						</div>
+
+					</div>
+
+				</a>
+
 			</div>
-			<div class="product-image">
-				<img th:src="@{'/img/products/' + ${product.imageUrl}}" alt="Product Image" class="product-img">
-			</div>
-			<h3 th:text="${product.name}">Product Name</h3>
-			<div class="product-rating">
-				<img src="/img/Elements/star.png" alt="Star"> 
-				<span th:text="${product.rating}">5</span>
-			</div>
-			<div class="product-price">
-				<span th:text="${product.price - ((product.discount / 100) * product.price)}">₹70,999</span>
-				<span th:text="${product.price}">₹74,999</span>
-			</div>
-		</a>
+		</div>
 	</div>
-</div>
 
 
 	<!-- Footer -->
