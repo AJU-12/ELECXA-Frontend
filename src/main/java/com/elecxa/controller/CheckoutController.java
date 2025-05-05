@@ -49,9 +49,10 @@ public class CheckoutController {
     @GetMapping("/")
     public String showCheckoutForm(Model model  , HttpSession session) {
     	long id = (long)session.getAttribute("userId");
+    	String token = (String)session.getAttribute("accessToken");
 
-    	UserDTO userProfile = profileService.getUserProfile(id);
-    	AddressDTO userAddress = addressService.getUserAddress(id);
+    	UserDTO userProfile = profileService.getUserProfile(id , token);
+    	AddressDTO userAddress = addressService.getUserAddress(id , token);
     	CheckoutFormDTO checkoutform = new CheckoutFormDTO();
     	
     	checkoutform.setDoorNoStreetName(userAddress.getDoorNoStreetName() == null ? " " : userAddress.getDoorNoStreetName());
@@ -65,8 +66,8 @@ public class CheckoutController {
        
     	model.addAttribute("checkoutForm", checkoutform);
 
-        CartDTO cart = cartService.getCart(id); // calling backend for cart
-        List<CartItemDTO> cartItems = cartService.getCartItems(cart.getCartId());
+        CartDTO cart = cartService.getCart(id, token); // calling backend for cart
+        List<CartItemDTO> cartItems = cartService.getCartItems(cart.getCartId(), token);
         System.out.println(cartItems);
         BigDecimal subtotal = BigDecimal.ZERO;
         BigDecimal totalDiscount = BigDecimal.ZERO;

@@ -22,7 +22,7 @@ public class SubCategoryService {
 	        this.restTemplate = restTemplate;
 	    }
 
-	    public List<SubCategoryDTO> getAllSubCategories() {
+	    public List<SubCategoryDTO> getAllSubCategories(String token) {
 	    	String url = "http://localhost:8080/api/subcategories";
 
 	    	HttpHeaders headers = new HttpHeaders();
@@ -41,7 +41,7 @@ public class SubCategoryService {
 	    	return subcategories;
 	    }
 	    
-	    public List<SubCategoryDTO> getSubCategoriesByCategory(String category) {
+	    public List<SubCategoryDTO> getSubCategoriesByCategory(String category, String token) {
 	    	String url = "http://localhost:8080/api/subcategories/category/{category}";
 
 	    	HttpHeaders headers = new HttpHeaders();
@@ -62,7 +62,7 @@ public class SubCategoryService {
 
 	    }
 
-		public SubCategoryDTO getSubCategoryByName(String subcategoryName) {
+		public SubCategoryDTO getSubCategoryByName(String subcategoryName, String token) {
 			String url = "http://localhost:8080/api/subcategories/subcategory/{subcategoryName}";
 
 			HttpHeaders headers = new HttpHeaders();

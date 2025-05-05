@@ -23,7 +23,9 @@ public class PaymentController {
     public void initiatePayment(@RequestParam BigDecimal amount, Model model, HttpSession session) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
+    	String token = (String)session.getAttribute("accessToken");
+        headers.setBasicAuth(token);
+        
         HttpEntity<String> entity = new HttpEntity<>("amount=" + amount, headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 "http://localhost:8080/api/payments/create",
@@ -46,8 +48,14 @@ public class PaymentController {
                 "&razorpayOrderId=" + orderId +
                 "&signature=" + signature +
                 "&amount=" + amount;
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	String token = (String)session.getAttribute("accessToken");
+        headers.setBasicAuth(token);
+        HttpEntity<String> entity = new HttpEntity<>( headers);
 
-        restTemplate.exchange(url, HttpMethod.POST, null, String.class);
+        restTemplate.exchange(url, HttpMethod.POST, entity , String.class);
         return "redirect:/customer/orders";
     }
 }

@@ -26,7 +26,7 @@ public class ProductService {
         this.restTemplate = restTemplate;
     }
 
-    public List<ProductDTO> getPopularProducts() {
+    public List<ProductDTO> getPopularProducts(String token) {
     	String url = "http://localhost:8080/api/products";
 
     	HttpHeaders headers = new HttpHeaders();
@@ -46,7 +46,7 @@ public class ProductService {
 
     }
 
-    public List<ProductDTO> getProductsByCategory(String category , int id) {
+    public List<ProductDTO> getProductsByCategory(String category , int id, String token) {
         String url = "http://localhost:8080/api/products/category/{id}";
 
         ResponseEntity<List<ProductDTO>> response = restTemplate.exchange(
@@ -60,7 +60,7 @@ public class ProductService {
         return response.getBody();
     }
 
-	public List<ProductDTO> getProductsBysubCategory(String subcategory, Integer id) {
+	public List<ProductDTO> getProductsBysubCategory(String subcategory, Integer id , String token) {
 		String url = "http://localhost:8080/api/products/subcategory/{id}";
 
         ResponseEntity<List<ProductDTO>> response = restTemplate.exchange(
@@ -74,7 +74,7 @@ public class ProductService {
         return response.getBody();
 	}
 	
-	 public ProductDTO getProductsById(long id) {
+	 public ProductDTO getProductsById(long id, String token) {
 	        String url = "http://localhost:8080/api/products/{id}";
 
 	        ResponseEntity<ProductDTO> response = restTemplate.exchange(
@@ -88,7 +88,7 @@ public class ProductService {
 	        return response.getBody();
 	    }
 
-	public List<ProductAttributeDTO> getProductAttributes(Long id) {
+	public List<ProductAttributeDTO> getProductAttributes(Long id, String token) {
 		String url = "http://localhost:8080/api/attributes/product/{productId}";
 
         ResponseEntity<List<ProductAttributeDTO>> response = restTemplate.exchange(
@@ -102,7 +102,7 @@ public class ProductService {
         return response.getBody();
 	}
 
-	public List<ProductDTO> getAllProducts() {
+	public List<ProductDTO> getAllProducts(String token) {
 		String url = "http://localhost:8080/api/products";
 
         ResponseEntity< List<ProductDTO>> response = restTemplate.exchange(
@@ -116,7 +116,7 @@ public class ProductService {
         return response.getBody();
 	}
 	
-	 public List<ProductDTO> getProductByCategory(String category) {
+	 public List<ProductDTO> getProductByCategory(String category, String token) {
 	        String url = "http://localhost:8080/api/products/category/categoryName/{category}";
 
 	        ResponseEntity<List<ProductDTO>> response = restTemplate.exchange(
@@ -130,7 +130,7 @@ public class ProductService {
 	        return response.getBody();
 	    }
 
-	public List<ProductDTO> getProductsBySubCategory(String subcategoryName) {
+	public List<ProductDTO> getProductsBySubCategory(String subcategoryName, String token) {
 		String url = "http://localhost:8080/api/products/subcategory/subcategoryName/{subcategoryName}";
 
         ResponseEntity<List<ProductDTO>> response = restTemplate.exchange(
@@ -144,7 +144,7 @@ public class ProductService {
         return response.getBody();
 	}
 
-	public ProductDTO addProduct(ProductDTO product) {
+	public ProductDTO addProduct(ProductDTO product, String token) {
 		System.out.println(product);
 		String url = "http://localhost:8080/api/products/add";
 
@@ -162,7 +162,7 @@ public class ProductService {
 	    return response.getBody(); 
 	}
 
-	public void addProductAttributes(Long productId, List<ProductAttributeDTO> attribute) {
+	public void addProductAttributes(Long productId, List<ProductAttributeDTO> attribute, String token) {
 		String url = "http://localhost:8080/api/products/add/attributes/{productId}";
 
 		  HttpHeaders headers = new HttpHeaders();
@@ -179,7 +179,7 @@ public class ProductService {
 		);
 	}
 
-	public void deleteProduct(long productId) {
+	public void deleteProduct(long productId, String token) {
 		String url = "http://localhost:8080/api/products/delete/{productId}";
 
 	    ResponseEntity<String> response = restTemplate.exchange(
@@ -191,7 +191,7 @@ public class ProductService {
 		);
 	}
 
-	public ProductDTO updateProduct(ProductDTO product , long productId) {
+	public ProductDTO updateProduct(ProductDTO product , long productId, String token) {
 		System.out.println(product);
 		String url = "http://localhost:8080/api/products/update/{productId}";
 
@@ -210,7 +210,7 @@ public class ProductService {
 	    return response.getBody();
 	}
 
-	public void updateProductAttributes(Long productId, List<ProductAttributeDTO> attribute) {
+	public void updateProductAttributes(Long productId, List<ProductAttributeDTO> attribute, String token) {
 		String url = "http://localhost:8080/api/attributes/update/attributes/{productId}";
 System.out.println("hbjrj " + attribute);
 		  HttpHeaders headers = new HttpHeaders();

@@ -24,7 +24,7 @@ public class CategoryService {
         this.restTemplate = restTemplate;
     }
 
-    public List<CategoryDTO> getAllCategories() {
+    public List<CategoryDTO> getAllCategories(String token) {
     	String url = "http://localhost:8080/api/categories";
 
     	HttpHeaders headers = new HttpHeaders();
@@ -44,7 +44,7 @@ public class CategoryService {
 
     }
 
-	public CategoryDTO getCategoryByName(String categoryName) {
+	public CategoryDTO getCategoryByName(String categoryName, String token) {
 		String url = "http://localhost:8080/api/categories/categoryName/{categoryName}";
 
 		HttpHeaders headers = new HttpHeaders();
@@ -66,7 +66,7 @@ public class CategoryService {
 		
 	}
 
-	public SubCategoryDTO getCategoryBySubCategory(Integer id) {
+	public SubCategoryDTO getCategoryBySubCategory(Integer id, String token) {
 		String url = "http://localhost:8080/api/subcategories/category/categoryId/{id}";
 
 		HttpHeaders headers = new HttpHeaders();

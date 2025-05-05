@@ -22,7 +22,7 @@ public class AddressService {
 		this.restTemplate = restTemplate;
 	}
 
-	public AddressDTO getUserAddress(long id) {
+	public AddressDTO getUserAddress(long id, String token) {
 		String url = "http://localhost:8080/api/addresses/user/{id}";
 
 		HttpHeaders headers = new HttpHeaders();
@@ -35,7 +35,7 @@ public class AddressService {
 		return response.getBody();
 	}
 
-	public void updateUserAddress(AddressDTO userAddress, long id) {
+	public void updateUserAddress(AddressDTO userAddress, long id, String token) {
 		String BACKEND_URL = "http://localhost:8080/api/addresses";
 
 		HttpHeaders headers = new HttpHeaders();

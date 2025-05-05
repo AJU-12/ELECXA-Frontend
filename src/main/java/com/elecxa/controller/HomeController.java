@@ -55,19 +55,20 @@ public class HomeController {
 
 
     @GetMapping("/products")
-    public String showProductsByCategory(@RequestParam(required = false) String category,@RequestParam(required = false) Integer id , Model model) {
+    public String showProductsByCategory(@RequestParam(required = false) String category,@RequestParam(required = false) Integer id , Model model , HttpSession session) {
         if (category != null) {
             model.addAttribute("categoryName", category);
         }
+    	String token = (String)session.getAttribute("accessToken");
 
         long categoryId;
         if(id == -1) {
-        	categoryId =categoryService.getCategoryByName(category).getCategoryId();
+        	categoryId =categoryService.getCategoryByName(category , token).getCategoryId();
         	id = (int) categoryId;
         }
         List<ProductDTO> products = (category != null)
-                ? productService.getProductsByCategory(category , id)
-                : productService.getPopularProducts();
+                ? productService.getProductsByCategory(category , id , token)
+                : productService.getPopularProducts(token);
 
         model.addAttribute("products", products);
         model.addAttribute("categoryId",id);
@@ -75,19 +76,20 @@ public class HomeController {
     }
     
     @GetMapping("/subcategory/products")
-    public String showProductsBySubCategory(@RequestParam(required = false) String subcategory,@RequestParam(required = false) Integer id , Model model) {
+    public String showProductsBySubCategory(@RequestParam(required = false) String subcategory,@RequestParam(required = false) Integer id , Model model , HttpSession session) {
     	if (subcategory != null) {
             model.addAttribute("subcategories", subcategory);
         }
-   
+    	String token = (String)session.getAttribute("accessToken");
+
         List<ProductDTO> products = (subcategory != null)
-                ? productService.getProductsBySubCategory(subcategory)
-                : productService.getPopularProducts();
+                ? productService.getProductsBySubCategory(subcategory , token)
+                : productService.getPopularProducts(token);
 
         model.addAttribute("products", products);
         model.addAttribute("categoryId",id);
         
-        SubCategoryDTO subCategory = categoryService.getCategoryBySubCategory(id);
+        SubCategoryDTO subCategory = categoryService.getCategoryBySubCategory(id , token);
         model.addAttribute("categoryName",subCategory.getCategory().getName());
         model.addAttribute("categoryId",subCategory.getCategory().getCategoryId());
 

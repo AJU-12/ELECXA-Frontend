@@ -25,9 +25,10 @@ public class CartController {
 
     // Display the cart page
     @GetMapping
-    public String viewCart(Model model , @RequestParam long id) {
-        CartDTO cart = cartService.getCart(id);
-        List<CartItemDTO> cartItems = cartService.getCartItems(cart.getCartId());
+    public String viewCart(Model model , @RequestParam long id , HttpSession session) {
+    	String token = (String)session.getAttribute("accessToken");
+    	CartDTO cart = cartService.getCart(id,token);
+        List<CartItemDTO> cartItems = cartService.getCartItems(cart.getCartId() , token);
         
         BigDecimal subtotal = BigDecimal.ZERO;
         BigDecimal totalDiscount = BigDecimal.ZERO;
@@ -55,27 +56,28 @@ public class CartController {
                                  @RequestParam("action") String action,
                                  Model model , HttpSession session) {
     	long id = (long)session.getAttribute("userId");
+    	String token = (String)session.getAttribute("accessToken");
 
-        cartService.updateItemQuantity(itemId, action);
+        cartService.updateItemQuantity(itemId, action,  token);
         return "redirect:/cart?id="+id;  // Redirect back to the cart page
     }
     
     @GetMapping("/addtocart/{productId}")
     public String updateCart(@PathVariable Long productId, Model model  , HttpSession session) {
-    	System.out.println(session.getAttribute("userId"));
-    	System.out.println(session.getAttribute("userId").getClass());
+    	String token = (String)session.getAttribute("accessToken");
 
     	long id = (long)session.getAttribute("userId");
-        cartService.updateCart(productId,id);
+        cartService.updateCart(productId,id , token);
         return "redirect:/product/{productId}";  // Redirect back to the cart page
     }
 
     // Remove an item from the cart
     @GetMapping("/remove")
     public String removeItem(@RequestParam("itemId") Long itemId , HttpSession session) {
-    	
+    	String token = (String)session.getAttribute("accessToken");
+
     	long id = (long)session.getAttribute("userId");
-        cartService.removeItem(itemId);
+        cartService.removeItem(itemId , token);
         return "redirect:/cart?id="+id;  // Redirect back to the cart page
     }
 }

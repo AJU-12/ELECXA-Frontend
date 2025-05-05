@@ -80,6 +80,8 @@ public class ProductController {
 	@GetMapping
 	public String showProductDetails(HttpSession session, Model model, HttpServletRequest request) {
 
+    	String token = (String)session.getAttribute("accessToken");
+
 		if (session.getAttribute("darkMode") == null) {
 			session.setAttribute("darkMode", false);
 		}
@@ -89,13 +91,13 @@ public class ProductController {
 
 		model.addAttribute("currentUri", request.getRequestURI());
 		model.addAttribute("newProduct", new ProductSaveDTO());
-		List<CategoryDTO> categories = categoryService.getAllCategories();
+		List<CategoryDTO> categories = categoryService.getAllCategories(token);
 		model.addAttribute("categories", categories);
 
-		List<SubCategoryDTO> subcategories = subcategoryService.getAllSubCategories();
+		List<SubCategoryDTO> subcategories = subcategoryService.getAllSubCategories(token);
 		model.addAttribute("subcategories", subcategories);
 
-		List<ProductDTO> products = productService.getAllProducts();
+		List<ProductDTO> products = productService.getAllProducts(token);
 		model.addAttribute("products", products);
 		
 		return "admin/products";
@@ -104,6 +106,7 @@ public class ProductController {
 	@GetMapping("/category/{categoryName}")
 	public String showProductDetailsByCategory(HttpSession session, Model model, HttpServletRequest request,
 			@PathVariable String categoryName) {
+    	String token = (String)session.getAttribute("accessToken");
 
 		if (session.getAttribute("darkMode") == null) {
 			session.setAttribute("darkMode", false);
@@ -114,13 +117,13 @@ public class ProductController {
 
 		model.addAttribute("currentUri", request.getRequestURI());
 		model.addAttribute("newProduct", new ProductSaveDTO());
-		List<CategoryDTO> categories = categoryService.getAllCategories();
+		List<CategoryDTO> categories = categoryService.getAllCategories(token);
 		model.addAttribute("categories", categories);
 
-		List<SubCategoryDTO> subcategories = subcategoryService.getSubCategoriesByCategory(categoryName);
+		List<SubCategoryDTO> subcategories = subcategoryService.getSubCategoriesByCategory(categoryName , token);
 		model.addAttribute("subcategories", subcategories);
 
-		List<ProductDTO> products = productService.getProductByCategory(categoryName);
+		List<ProductDTO> products = productService.getProductByCategory(categoryName , token);
 		model.addAttribute("products", products);
 
 		return "admin/products";
@@ -129,6 +132,7 @@ public class ProductController {
 	@GetMapping("/subcategory/{subcategoryName}")
 	public String showProductDetailsBySubCategory(HttpSession session, Model model, HttpServletRequest request,
 			@PathVariable String subcategoryName) {
+    	String token = (String)session.getAttribute("accessToken");
 
 		if (session.getAttribute("darkMode") == null) {
 			session.setAttribute("darkMode", false);
@@ -140,14 +144,14 @@ public class ProductController {
 		model.addAttribute("currentUri", request.getRequestURI());
 		model.addAttribute("newProduct", new ProductSaveDTO());
 
-		List<SubCategoryDTO> subcategories = subcategoryService.getAllSubCategories();
+		List<SubCategoryDTO> subcategories = subcategoryService.getAllSubCategories(token);
 		model.addAttribute("subcategories", subcategories);
 
-		List<CategoryDTO> categories = categoryService.getAllCategories();
+		List<CategoryDTO> categories = categoryService.getAllCategories(token);
 		model.addAttribute("categories", categories);
 		
 
-		List<ProductDTO> products = productService.getProductsBySubCategory(subcategoryName);
+		List<ProductDTO> products = productService.getProductsBySubCategory(subcategoryName , token);
 		System.out.println(products);
 		model.addAttribute("products", products);
 
@@ -155,15 +159,16 @@ public class ProductController {
 	}
 
 	@GetMapping("/{id}")
-	public String showProductDetail(@PathVariable Long id, Model model) {
+	public String showProductDetail(@PathVariable Long id, Model model , HttpSession session) {
+    	String token = (String)session.getAttribute("accessToken");
 
-		ProductDTO product = productService.getProductsById(id);
+		ProductDTO product = productService.getProductsById(id , token);
 		model.addAttribute("product", product);
 		model.addAttribute("subcategory", product.getSubcategory().getName());
 		model.addAttribute("categoryname", product.getSubcategory().getCategory().getName());
 		model.addAttribute("categoryId", product.getSubcategory().getCategory().getCategoryId());
 
-		List<ProductAttributeDTO> productAttribute = productService.getProductAttributes(id);
+		List<ProductAttributeDTO> productAttribute = productService.getProductAttributes(id , token);
 		model.addAttribute("generalSpecs", productAttribute.subList(0, 2));
 		model.addAttribute("performanceSpecs", productAttribute.subList(2, 4));
 		model.addAttribute("displaySpecs", productAttribute.subList(4, 5));
@@ -176,8 +181,9 @@ public class ProductController {
 	
 	
 	@PostMapping("/add")
-    public String addProduct(@ModelAttribute("newProduct") ProductSaveDTO newProduct){
-		
+    public String addProduct(@ModelAttribute("newProduct") ProductSaveDTO newProduct , HttpSession session){
+    	String token = (String)session.getAttribute("accessToken");
+
 		ProductDTO product = new ProductDTO();
 		
 		product.setBrand(newProduct.getBrand());
@@ -200,25 +206,27 @@ public class ProductController {
 		}
 		
 		
-		product.setSubcategory(subcategoryService.getSubCategoryByName(newProduct.getSubcategory()));
-		product.getSubcategory().setCategory(categoryService.getCategoryByName(newProduct.getCategory()));
+		product.setSubcategory(subcategoryService.getSubCategoryByName(newProduct.getSubcategory(),token));
+		product.getSubcategory().setCategory(categoryService.getCategoryByName(newProduct.getCategory() , token));
 
-		ProductDTO productInfo = productService.addProduct(product);
+		ProductDTO productInfo = productService.addProduct(product , token);
         
-		productService.addProductAttributes(productInfo.getProductId(),attribute);
+		productService.addProductAttributes(productInfo.getProductId(),attribute , token);
         return "redirect:/product";
     }
 	
 	@GetMapping("/delete/{productId}")
-    public String deleteProduct(@PathVariable long productId){
-		
-		productService.deleteProduct(productId);
+    public String deleteProduct(@PathVariable long productId , HttpSession session){
+    	String token = (String)session.getAttribute("accessToken");
+
+		productService.deleteProduct(productId , token);
 		return "redirect:/product";
     }
 	
 	@PostMapping("/edit/{productId}")
-    public String editProduct(@ModelAttribute("newProduct") ProductSaveDTO newProduct ,@PathVariable long productId , Model model){
-		
+    public String editProduct(@ModelAttribute("newProduct") ProductSaveDTO newProduct ,@PathVariable long productId , Model model , HttpSession session){
+    	String token = (String)session.getAttribute("accessToken");
+
         ProductDTO product = new ProductDTO();
 		
 		product.setBrand(newProduct.getBrand());
@@ -247,9 +255,9 @@ public class ProductController {
 		}
 		
 		System.out.println(attribute);
-		ProductDTO productInfo = productService.updateProduct(product , productId);
+		ProductDTO productInfo = productService.updateProduct(product , productId , token);
         
-		productService.updateProductAttributes(productId,attribute);
+		productService.updateProductAttributes(productId,attribute , token);
 		
 		return "redirect:/product";
     }

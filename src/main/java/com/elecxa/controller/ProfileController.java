@@ -33,8 +33,10 @@ public class ProfileController {
     
     @GetMapping
     public String showProfile(Model model , @RequestParam int id , HttpSession session) {
-        UserDTO userProfile = profileService.getUserProfile(id);
-        AddressDTO userAddress = addressService.getUserAddress(id);
+    	String token = (String)session.getAttribute("accessToken");
+
+        UserDTO userProfile = profileService.getUserProfile(id , token);
+        AddressDTO userAddress = addressService.getUserAddress(id , token);
         model.addAttribute("address", userAddress);
         model.addAttribute("userProfile", userProfile);
         model.addAttribute("activeTab", "profile");
@@ -50,18 +52,17 @@ public class ProfileController {
             HttpSession session,
             Model model) {
     	
-    	
+    	String token = (String)session.getAttribute("accessToken");
+
     	 long id = userProfile.getUserId();
-         
-         session.getAttribute("userId");
-        
+                 
         if (result.hasErrors()) {
             model.addAttribute("activeTab", "profile");
             return "user/profile-new";
         }
 
-        profileService.updateUserProfile(userProfile, id);
-        addressService.updateUserAddress(userAddress, id);
+        profileService.updateUserProfile(userProfile, id , token);
+        addressService.updateUserAddress(userAddress, id , token);
 
         return "redirect:/profile?id=" + id;
     }
