@@ -54,7 +54,7 @@
         </div>
         
         <!-- Profile Form -->
-        <div class="profile-form-container">
+        <div class="profile-form-container" th:style="${activeTab == 'orders' ? 'display: none;' : 'display: block;'}">
             <form th:action="@{/profile/update}" th:object="${userProfile}" method="post">
                 <div class="form-section">
                     <h3 class="section-title">Your Details</h3>
@@ -123,6 +123,245 @@
                     <button type="submit" class="edit-button">Save Changes</button>
                 </div>
             </form>
+        </div>
+        
+        <!-- My Orders Section -->
+        <div class="orders-container" th:style="${activeTab == 'orders' ? 'display: block;' : 'display: none;'}">
+            <div class="orders-header">
+                <div class="orders-title">
+                    <h2>My Orders</h2>
+                    <p class="orders-subtitle" th:text="${#lists.size(orders)} + ' orders found'">3 orders found</p>
+                </div>
+                <div class="orders-filter">
+                    <select class="filter-select" id="orderStatusFilter">
+                        <option value="all">All Orders</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Orders List -->
+            <div class="orders-list" th:if="${activeTab == 'orders' and not #lists.isEmpty(orders)}">
+                <!-- Example Orders with Thymeleaf -->
+                <div class="order-card" th:each="order : ${orders}" th:data-status="${order.status}">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <span class="order-number" th:text="${'Order #' + order.orderNumber}">Order #ELX-2024-001</span>
+                            <span class="order-date" th:text="${#temporals.format(order.orderDate, 'MMMM dd, yyyy')}">March 15, 2024</span>
+                        </div>
+                        <div class="order-status" th:classappend="${order.status}" th:text="${order.status}">Processing</div>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item" th:each="item : ${order.items}">
+                            <img th:src="${item.imageUrl}" th:alt="${item.name}">
+                            <div class="item-details">
+                                <h4 th:text="${item.name}">iPhone 15 Pro Max</h4>
+                                <p th:text="${item.specifications}">Natural Titanium, 256GB</p>
+                                <span class="item-price" th:text="${'₹' + #numbers.formatDecimal(item.price, 1, 'COMMA', 2, 'POINT')}">₹1,59,900</span>
+                            </div>
+                            <div class="item-quantity" th:text="${'x' + item.quantity}">x1</div>
+                        </div>
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-total">
+                            <span>Total Amount:</span>
+                            <span class="total-amount" th:text="${'₹' + #numbers.formatDecimal(order.totalAmount, 1, 'COMMA', 2, 'POINT')}">₹1,59,900</span>
+                        </div>
+                        <div class="order-actions">
+                            <button th:if="${order.status == 'processing' || order.status == 'shipped'}" 
+                                    class="track-order-btn" 
+                                    th:onclick="${'trackOrder(\'' + order.orderNumber + '\')'}">
+                                <i class="fas fa-truck"></i> Track Order
+                            </button>
+                            <button th:if="${order.status == 'delivered'}" 
+                                    class="view-details-btn" 
+                                    th:onclick="${'viewOrderDetails(\'' + order.orderNumber + '\')'}">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button th:if="${order.status == 'processing'}" 
+                                    class="cancel-order-btn" 
+                                    th:onclick="${'cancelOrder(\'' + order.orderNumber + '\')'}">
+                                <i class="fas fa-times"></i> Cancel Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Example Orders -->
+                <!-- Order 2 -->
+                <div class="order-card" data-status="shipped">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <span class="order-number">Order #ELX-2024-002</span>
+                            <span class="order-date">March 12, 2024</span>
+                        </div>
+                        <div class="order-status shipped">Shipped</div>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item">
+                            <img src="../img/Products/macbook-pro-14-m3-pro-1.jpg" alt="MacBook Pro">
+                            <div class="item-details">
+                                <h4>MacBook Pro 14"</h4>
+                                <p>M3 Pro, 18GB RAM, 512GB SSD</p>
+                                <span class="item-price">₹1,99,900</span>
+                            </div>
+                            <div class="item-quantity">x1</div>
+                        </div>
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-total">
+                            <span>Total Amount:</span>
+                            <span class="total-amount">₹1,99,900</span>
+                        </div>
+                        <div class="order-actions">
+                            <button class="track-order-btn" onclick="trackOrder('ELX-2024-002')">
+                                <i class="fas fa-truck"></i> Track Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order 3 -->
+                <div class="order-card" data-status="delivered">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <span class="order-number">Order #ELX-2024-003</span>
+                            <span class="order-date">March 10, 2024</span>
+                        </div>
+                        <div class="order-status delivered">Delivered</div>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item">
+                            <img src="../img/Products/airpods-pro-2nd-generation-1.jpg" alt="AirPods Pro">
+                            <div class="item-details">
+                                <h4>AirPods Pro (2nd Generation)</h4>
+                                <p>USB-C Charging Case</p>
+                                <span class="item-price">₹24,900</span>
+                            </div>
+                            <div class="item-quantity">x1</div>
+                        </div>
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-total">
+                            <span>Total Amount:</span>
+                            <span class="total-amount">₹24,900</span>
+                        </div>
+                        <div class="order-actions">
+                            <button class="view-details-btn" onclick="viewOrderDetails('ELX-2024-003')">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order 4 -->
+                <div class="order-card" data-status="processing">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <span class="order-number">Order #ELX-2024-004</span>
+                            <span class="order-date">March 8, 2024</span>
+                        </div>
+                        <div class="order-status processing">Processing</div>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item">
+                            <img src="../img/Products/apple-watch-series-9-1.jpg" alt="Apple Watch">
+                            <div class="item-details">
+                                <h4>Apple Watch Series 9</h4>
+                                <p>GPS, 45mm, Midnight Aluminium</p>
+                                <span class="item-price">₹41,900</span>
+                            </div>
+                            <div class="item-quantity">x1</div>
+                        </div>
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-total">
+                            <span>Total Amount:</span>
+                            <span class="total-amount">₹41,900</span>
+                        </div>
+                        <div class="order-actions">
+                            <button class="track-order-btn" onclick="trackOrder('ELX-2024-004')">
+                                <i class="fas fa-truck"></i> Track Order
+                            </button>
+                            <button class="cancel-order-btn" onclick="cancelOrder('ELX-2024-004')">
+                                <i class="fas fa-times"></i> Cancel Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order 5 -->
+                <div class="order-card" data-status="cancelled">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <span class="order-number">Order #ELX-2024-005</span>
+                            <span class="order-date">March 5, 2024</span>
+                        </div>
+                        <div class="order-status cancelled">Cancelled</div>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item">
+                            <img src="../img/Products/ipad-pro-12-9-inch-1.jpg" alt="iPad Pro">
+                            <div class="item-details">
+                                <h4>iPad Pro 12.9-inch</h4>
+                                <p>M2, 256GB, Wi-Fi + Cellular</p>
+                                <span class="item-price">₹1,29,900</span>
+                            </div>
+                            <div class="item-quantity">x1</div>
+                        </div>
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-total">
+                            <span>Total Amount:</span>
+                            <span class="total-amount">₹1,29,900</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order 6 -->
+                <div class="order-card" data-status="delivered">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <span class="order-number">Order #ELX-2024-006</span>
+                            <span class="order-date">March 1, 2024</span>
+                        </div>
+                        <div class="order-status delivered">Delivered</div>
+                    </div>
+                    <div class="order-items">
+                        <div class="order-item">
+                            <img src="../img/Products/magic-keyboard-1.jpg" alt="Magic Keyboard">
+                            <div class="item-details">
+                                <h4>Magic Keyboard</h4>
+                                <p>For iPad Pro 12.9-inch</p>
+                                <span class="item-price">₹32,900</span>
+                            </div>
+                            <div class="item-quantity">x1</div>
+                        </div>
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-total">
+                            <span>Total Amount:</span>
+                            <span class="total-amount">₹32,900</span>
+                        </div>
+                        <div class="order-actions">
+                            <button class="view-details-btn" onclick="viewOrderDetails('ELX-2024-006')">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Orders Message -->
+            <div class="no-orders" th:if="${#lists.isEmpty(orders)}">
+                <i class="fas fa-shopping-bag"></i>
+                <h3>No Orders Yet</h3>
+                <p>Start shopping to see your orders here</p>
+                <a href="products-page.html" class="shop-now-btn">Shop Now</a>
+            </div>
         </div>
     </div>
 
