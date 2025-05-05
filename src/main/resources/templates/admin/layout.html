@@ -17,7 +17,7 @@
     <!-- Dark mode CSS (conditionally loaded) -->
     <link rel="stylesheet" th:href="@{/css/dark-mode.css}" th:if="${session.darkMode}">
 </head>
-<body th:classappend="${session.darkMode ? 'dark-mode' : ''}">
+<body th:classappend="${session.darkMode != null ? 'dark-mode' : ''}">
     <div class="wrapper">
         <!-- Sidebar -->
         <nav id="sidebar" class="sidebar" th:classappend="${session.sidebarCollapsed ? 'collapsed' : ''}">
@@ -29,31 +29,31 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li th:classappend="${#httpServletRequest.requestURI.contains('/dashboard') ? 'active' : ''}">
+                <li th:classappend="${currentUri.contains('/dashboard') ? 'active' : ''}">
                     <a th:href="@{/dashboard}">
                         <i class="fas fa-home"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li th:classappend="${#httpServletRequest.requestURI.contains('/products') ? 'active' : ''}">
-                    <a th:href="@{/products}">
+                <li th:classappend="${currentUri.contains('/products') ? 'active' : ''}">
+                    <a th:href="@{/product}">
                         <i class="fas fa-box"></i>
                         <span>Products</span>
                     </a>
                 </li>
-                <li th:classappend="${#httpServletRequest.requestURI.contains('/orders') ? 'active' : ''}">
+                <li th:classappend="${currentUri.contains('/orders') ? 'active' : ''}">
                     <a th:href="@{/orders}">
                         <i class="fas fa-shopping-cart"></i>
                         <span>Orders</span>
                     </a>
                 </li>
-                <li th:classappend="${#httpServletRequest.requestURI.contains('/reports') ? 'active' : ''}">
+                <li th:classappend="${currentUri.contains('/reports') ? 'active' : ''}">
                     <a th:href="@{/reports}">
                         <i class="fas fa-chart-bar"></i>
                         <span>Reports</span>
                     </a>
                 </li>
-                <li th:classappend="${#httpServletRequest.requestURI.contains('/settings') ? 'active' : ''}">
+                <li th:classappend="${currentUri.contains('/settings') ? 'active' : ''}">
                     <a th:href="@{/settings}">
                         <i class="fas fa-cog"></i>
                         <span>Settings</span>

@@ -22,13 +22,13 @@ public class AddressService {
         this.restTemplate = restTemplate;
     }
     
-    public AddressDTO getUserAddress(int id) {
+    public AddressDTO getUserAddress(long id) {
         String url = "http://localhost:8080/api/addresses/user/{id}";
         AddressDTO address= restTemplate.getForObject(url, AddressDTO.class , id);
         return address;
     }
 
-	public void updateUserAddress(AddressDTO userAddress, int id) {
+	public void updateUserAddress(AddressDTO userAddress, long id) {
 		String BACKEND_URL = "http://localhost:8080/api/addresses";
 
         HttpHeaders headers = new HttpHeaders();

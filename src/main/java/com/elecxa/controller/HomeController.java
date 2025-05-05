@@ -4,9 +4,13 @@ import com.elecxa.dto.CategoryDTO;
 import com.elecxa.dto.ProductDTO;
 import com.elecxa.service.CategoryService;
 import com.elecxa.service.ProductService;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -24,6 +28,14 @@ public class HomeController {
 
     @GetMapping("/")
     public String showHomePage( Model model) {
+        return "user/index"; 
+    }
+    
+    @GetMapping("/{id}")
+    public String showHomePage1(@PathVariable int id , Model model  , HttpSession session) {
+    	
+    	 Integer userId = id; 
+         session.setAttribute("userId", userId.longValue());
         return "user/index"; 
     }
     

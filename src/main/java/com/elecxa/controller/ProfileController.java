@@ -1,6 +1,7 @@
 package com.elecxa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,8 @@ import com.elecxa.dto.UserDTO;
 import com.elecxa.service.AddressService;
 import com.elecxa.service.ProfileService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
@@ -29,32 +32,37 @@ public class ProfileController {
 
     
     @GetMapping
-    public String showProfile(Model model , @RequestParam int id) {
+    public String showProfile(Model model , @RequestParam int id , HttpSession session) {
         UserDTO userProfile = profileService.getUserProfile(id);
         AddressDTO userAddress = addressService.getUserAddress(id);
         model.addAttribute("address", userAddress);
         model.addAttribute("userProfile", userProfile);
         model.addAttribute("activeTab", "profile");
+        
         return "user/profile-new";
     }
 
-    @PutMapping("/update")
-    public void updateProfile(@RequestBody UserDTO userProfile , BindingResult result, @RequestParam int id, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("activeTab", "profile");
-         //   return "user/profile-new";
-        }
-        profileService.updateUserProfile(userProfile , id);
-      //  return "user/profile-new";
-    }
-    
-    @PutMapping("/updateaddress")
-    public String updateAddress(@RequestBody AddressDTO userAddress , BindingResult result, @RequestParam int id, Model model) {
+    @PostMapping("/update")
+    public String updateProfile(
+            @ModelAttribute("userProfile") UserDTO userProfile,
+            @ModelAttribute("address") AddressDTO userAddress,
+            BindingResult result,
+            HttpSession session,
+            Model model) {
+    	
+    	
+    	 long id = userProfile.getUserId();
+         
+         session.getAttribute("userId");
+        
         if (result.hasErrors()) {
             model.addAttribute("activeTab", "profile");
             return "user/profile-new";
         }
-        addressService.updateUserAddress(userAddress , id);
-        return "user/profile-new";
+
+        profileService.updateUserProfile(userProfile, id);
+        addressService.updateUserAddress(userAddress, id);
+
+        return "redirect:/profile?id=" + id;
     }
 }

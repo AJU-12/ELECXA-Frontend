@@ -173,10 +173,8 @@ h2 {
 .header-center {
     display: flex;
     align-items: center;
-    gap: 10px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    justify-content: center;
+    flex-grow: 1;
 }
 
 .overlap {
@@ -190,6 +188,7 @@ h2 {
     -webkit-backdrop-filter: blur(17.5px) brightness(100%);
     display: flex;
     align-items: center;
+    margin: 0 auto;
 }
 
 .div {

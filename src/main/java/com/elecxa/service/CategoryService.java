@@ -23,4 +23,11 @@ public class CategoryService {
         CategoryDTO[] categories = restTemplate.getForObject(url, CategoryDTO[].class);
         return Arrays.asList(categories);
     }
+
+	public CategoryDTO getCategoryByName(String categoryName) {
+		 String url = "http://localhost:8080/api/categories/categoryName/{categoryName}";
+	        CategoryDTO categories = restTemplate.getForObject(url, CategoryDTO.class , categoryName);
+	        return categories;
+		
+	}
 }
