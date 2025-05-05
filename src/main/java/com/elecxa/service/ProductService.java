@@ -82,5 +82,15 @@ public class ProductService {
 
         return response.getBody();
 	}
+	   public Long getTotalProductCount() {
+	        String url = "http://localhost:8080/api/products/count";  // Assuming you have an endpoint that returns the total product count
+	        ResponseEntity<Long> response = restTemplate.exchange(
+	            url,
+	            HttpMethod.GET,
+	            null,
+	            Long.class
+	        );
+	        return response.getBody();
+	    }
 
 }

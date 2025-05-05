@@ -33,7 +33,7 @@
             <div class="breadcrumb">
                 <a th:href="@{/}">Home</a>
                 <span>></span>
-                <span th:text="${categoryName ?: 'All Products'}">Products</span>
+                <span th:text="${categoryName ?:'All Products'}">Products</span>
             </div>
         </div>
 

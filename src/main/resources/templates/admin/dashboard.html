@@ -186,7 +186,7 @@
                                 <tbody>
                                     <tr th:each="order : ${recentOrders}" th:onclick="'window.location.href=\'' + @{/orders/{id}(id=${order.id})} + '\''"
                                         class="cursor-pointer">
-                                        <td th:text="${order.id}">1001</td>
+                                       66 <td th:text="${order.id}">1001</td>
                                         <td th:text="${order.customerName}">John Doe</td>
                                         <td th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy')}">01 Jun 2023</td>
                                         <td>
@@ -284,3 +284,4 @@
     </th:block>
 </body>
 </html>
+

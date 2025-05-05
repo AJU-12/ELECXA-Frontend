@@ -73,51 +73,52 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" id="ordersTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Payment Method</th>
-                                <th>Amount</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="order : ${orders}" class="order-row" th:data-order-id="${order.id}">
-                                <td th:text="${order.id}">1001</td>
-                                <td th:text="${order.customerName}">John Doe</td>
-                                <td th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy')}">01 Jun 2023</td>
-                                <td>
-                                    <span th:class="${'badge bg-' + (order.status == 'Pending' ? 'warning' : 
-                                                        order.status == 'Shipped' ? 'info' : 
-                                                        order.status == 'Delivered' ? 'success' : 'danger')}"
-                                          th:text="${order.status}">Pending</span>
-                                </td>
-                                <td th:text="${order.paymentMethod}">Credit Card</td>
-                                <td th:text="${#numbers.formatCurrency(order.totalAmount)}">$199.99</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-sm btn-outline-primary me-2">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                                <i class="fas fa-cog"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" th:href="@{/orders/{id}/update-status(id=${order.id}, status='Shipped')}">Mark as Shipped</a></li>
-                                                <li><a class="dropdown-item" th:href="@{/orders/{id}/update-status(id=${order.id}, status='Delivered')}">Mark as Delivered</a></li>
-                                                <li><a class="dropdown-item" th:href="@{/orders/{id}/update-status(id=${order.id}, status='Cancelled')}">Cancel Order</a></li>
-                                                <li><hr class="dropdown-divider"></li>
-                                                <li><a class="dropdown-item" th:href="@{/orders/{id}/invoice(id=${order.id})}">Generate Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                   <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Order Date</th>
+        <th>Status</th>
+        <th>Payment Method</th>
+        <th>Total Amount</th>
+        <th>Actions</th>
+    </tr>
+</thead>
+<tbody>
+    <tr th:each="order : ${orders}" class="order-row" th:data-order-id="${order.orderId}">
+        <td th:text="${order.orderId}">1001</td>
+        <td th:text="${order.userId}">John Doe</td> <!-- Replace with real customer name if needed -->
+        <td th:text="${#temporals.format(order.orderedDate, 'dd MMM yyyy')}">01 Jun 2023</td>
+        <td>
+            <span th:class="${'badge bg-' + (order.orderStatus == 'Pending' ? 'warning' : 
+                                             order.orderStatus == 'Shipped' ? 'info' : 
+                                             order.orderStatus == 'Delivered' ? 'success' : 'danger')}"
+                  th:text="${order.orderStatus}">Pending</span>
+        </td>
+        <td>Credit Card</td> <!-- Replace with dynamic value if you have one -->
+        <td th:text="${#numbers.formatCurrency(order.totalAmount)}">$199.99</td>
+        <td>
+            <div class="d-flex">
+                <a th:href="@{/orders/{id}(id=${order.orderId})}" class="btn btn-sm btn-outline-primary me-2">
+                    <i class="fas fa-eye"></i>
+                </a>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/orders/{id}/update-status(id=${order.orderId}, status='Shipped')}">Mark as Shipped</a></li>
+                        <li><a class="dropdown-item" th:href="@{/orders/{id}/update-status(id=${order.orderId}, status='Delivered')}">Mark as Delivered</a></li>
+                        <li><a class="dropdown-item" th:href="@{/orders/{id}/update-status(id=${order.orderId}, status='Cancelled')}">Cancel Order</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/orders/{id}/invoice(id=${order.orderId})}">Generate Invoice</a></li>
+                    </ul>
+                </div>
+            </div>
+        </td>
+    </tr>
+</tbody>
+
                     </table>
                 </div>
                 
