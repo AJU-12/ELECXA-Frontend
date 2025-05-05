@@ -67,7 +67,7 @@ public class CartController {
 
     	long id = (long)session.getAttribute("userId");
         cartService.updateCart(productId,id);
-        return "redirect:/products/{productId}";  // Redirect back to the cart page
+        return "redirect:/product/{productId}";  // Redirect back to the cart page
     }
 
     // Remove an item from the cart

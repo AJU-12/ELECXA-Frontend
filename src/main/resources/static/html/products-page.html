@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
     <!-- Header Section -->
     <header class="header">
         <div class="overlap-group">
-            <a href="index.html"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
+            <a th:href="@{/}"><img class="head-logo" src="../img/Headers/Your_paragraph_text_1-removebg-preview.png" alt="ELECXA" /></a>
             
             <div class="header-center">
                 <div class="search-container">
@@ -116,7 +116,7 @@
     <!-- Breadcrumb Navigation -->
     <div class="container breadcrumb-container">
         <div class="breadcrumb">
-            <a href="index.html">Home</a>
+            <a th:href="@{/}">Home</a>
             <span>></span>
             <span>Mobile Phones</span>
         </div>
@@ -129,7 +129,7 @@
             <div class="category-dropdown">
                 <button class="dropdown-btn">Categories <i class="fas fa-chevron-down"></i></button>
                 <div class="dropdown-content" id="category-list">
-                    <!-- Subcategories will be loaded here -->
+                    
                     <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
                 </div>
             </div>
@@ -919,19 +919,7 @@
             
             // Filter products based on selected filters
             function filterProducts(filters) {
-                // This is a placeholder for actual filtering logic
-                // In a real implementation, you would either:
-                // 1. Apply filters to already loaded products (client-side filtering)
-                // 2. Make an API call to get filtered products from the backend
-                
-                // Simulate filtering with a console log for now
-                console.log(`Filtering products with:
-                    - Price range: ₹${filters.priceRange.min} to ₹${filters.priceRange.max}
-                    - Brands: ${filters.brands.length ? filters.brands.join(', ') : 'Any'}
-                    - Rating: ${filters.rating ? filters.rating + '★ & above' : 'Any'}`);
-                
-                // Example of how you might show a loading state
-                document.querySelector('.products-grid').classList.add('filtering');
+               document.querySelector('.products-grid').classList.add('filtering');
                 
                 // Example of how you might update the UI after filtering
                 setTimeout(() => {

@@ -27,9 +27,23 @@ public class ProductService {
     }
 
     public List<ProductDTO> getPopularProducts() {
-        String url = "http://localhost:8080/api/products";
-        ProductDTO[] products = restTemplate.getForObject(url, ProductDTO[].class);
-        return Arrays.asList(products);
+    	String url = "http://localhost:8080/api/products";
+
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+
+    	HttpEntity<String> entity = new HttpEntity<>(headers);
+
+    	ResponseEntity<ProductDTO[]> response = restTemplate.exchange(
+    	    url,
+    	    HttpMethod.GET,
+    	    entity,
+    	    ProductDTO[].class
+    	);
+
+    	List<ProductDTO> products = Arrays.asList(response.getBody());
+    	return products;
+
     }
 
     public List<ProductDTO> getProductsByCategory(String category , int id) {

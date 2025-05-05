@@ -499,11 +499,15 @@ async function handleSignInClick(identifier) {
 			"Content-Type": "application/json"
 		}
 	});
-
-	if (response.status != 200) {
+	
+		if (response.status != 200) {
 		showError("Invalid Password")
 		return;
 	}
+	
+	let data = await response.json();
+
+	sessionStorage.setItem("accessToken" , data.accessToken);
 	// Show loading state
 	const signInButton = document.querySelector('.sign-in-button');
 	const signInText = document.getElementsByClassName('sign-in-text')[0];
@@ -521,23 +525,14 @@ async function handleSignInClick(identifier) {
 
 		let data = await response.json();
 		sessionStorage.setItem("userId", data.userId);
-
 		let response1 = await fetch(`http://localhost:8080/api/cart/${data.userId}`);
 
 		let data1 = await response1.json();
 		sessionStorage.setItem("cartId", data1.cartId);
 
-		// Simulate verification (replace with actual API call)
 		setTimeout(() => {
-			// Successful verification - redirect to home page
 
-			window.location.href = `/${sessionStorage.getItem("userId")}`;
-
-			// In case of error, show error and reset button
-			// showPasswordError('Invalid password. Please try again.');
-			// signInText.textContent = originalText;
-			// signInButton.disabled = false;
-			// signInButton.style.opacity = '1';
+			window.location.href = `login/${sessionStorage.getItem('userId')}/${sessionStorage.getItem('accessToken')}`;
 		}, 1500);
 	}
 }
