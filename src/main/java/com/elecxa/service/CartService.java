@@ -24,7 +24,7 @@ public class CartService {
     private RestTemplate restTemplate;
 
     // Get the current cart
-    public CartDTO getCart(long id) {
+    public CartDTO getCart(long id, String token) {
         // Make GET request to fetch cart details
         ResponseEntity<CartDTO> response = restTemplate.exchange(
                 BASE_URL + "{id}", // Endpoint to fetch cart data
@@ -37,7 +37,7 @@ public class CartService {
     }
 
     // Add item to the cart
-    public void addItemToCart(CartItemDTO cartItem) {
+    public void addItemToCart(CartItemDTO cartItem , String token) {
         // Make POST request to add an item to the cart
         HttpEntity<CartItemDTO> entity = new HttpEntity<>(cartItem, new HttpHeaders());
         restTemplate.exchange(
@@ -49,7 +49,7 @@ public class CartService {
     }
 
     // Update the quantity of an item in the cart
-    public void updateItemQuantity(Long itemId, String action) {
+    public void updateItemQuantity(Long itemId, String action, String token) {
         // Prepare the request body and URL
         String url = UriComponentsBuilder.fromHttpUrl(BASE_URL + "/update")
                 .queryParam("itemId", itemId)
@@ -66,7 +66,7 @@ public class CartService {
     }
 
     // Remove an item from the cart
-    public void removeItem(Long itemId) {
+    public void removeItem(Long itemId, String token) {
         // Prepare the request URL
         String url = BASE_URL + "/remove/{itemId}";
         
@@ -80,7 +80,7 @@ public class CartService {
         );
     }
 
-	public List<CartItemDTO> getCartItems(Long cartId) {
+	public List<CartItemDTO> getCartItems(Long cartId, String token) {
 		
 	    String url = "http://localhost:8080/api/cart/cartitem/";
 	    // Use RestTemplate.exchange() with the appropriate type
@@ -95,7 +95,7 @@ public class CartService {
 	    return response.getBody(); 
 	}
 
-	public void updateCart(Long productId, Long userId) {
+	public void updateCart(Long productId, Long userId, String token) {
 		
         String url = BASE_URL + "/add/{productId}/{userId}" ;
 

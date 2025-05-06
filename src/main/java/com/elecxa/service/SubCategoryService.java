@@ -3,6 +3,11 @@ package com.elecxa.service;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,21 +22,64 @@ public class SubCategoryService {
 	        this.restTemplate = restTemplate;
 	    }
 
-	    public List<SubCategoryDTO> getAllSubCategories() {
-	        String url = "http://localhost:8080/api/subcategories";
-	        SubCategoryDTO[] subcategories = restTemplate.getForObject(url, SubCategoryDTO[].class);
-	        return Arrays.asList(subcategories);
+	    public List<SubCategoryDTO> getAllSubCategories(String token) {
+	    	String url = "http://localhost:8080/api/subcategories";
+
+	    	HttpHeaders headers = new HttpHeaders();
+	    	headers.setContentType(MediaType.APPLICATION_JSON);
+
+	    	HttpEntity<String> entity = new HttpEntity<>(headers);
+
+	    	ResponseEntity<SubCategoryDTO[]> response = restTemplate.exchange(
+	    	    url,
+	    	    HttpMethod.GET,
+	    	    entity,
+	    	    SubCategoryDTO[].class
+	    	);
+
+	    	List<SubCategoryDTO> subcategories = Arrays.asList(response.getBody());
+	    	return subcategories;
 	    }
 	    
-	    public List<SubCategoryDTO> getSubCategoriesByCategory(String category) {
-	        String url = "http://localhost:8080/api/subcategories/category/{category}";
-	        SubCategoryDTO[] subcategories = restTemplate.getForObject(url, SubCategoryDTO[].class , category);
-	        return Arrays.asList(subcategories);
+	    public List<SubCategoryDTO> getSubCategoriesByCategory(String category, String token) {
+	    	String url = "http://localhost:8080/api/subcategories/category/{category}";
+
+	    	HttpHeaders headers = new HttpHeaders();
+	    	headers.setContentType(MediaType.APPLICATION_JSON);
+
+	    	HttpEntity<String> entity = new HttpEntity<>(headers);
+
+	    	ResponseEntity<SubCategoryDTO[]> response = restTemplate.exchange(
+	    	    url,
+	    	    HttpMethod.GET,
+	    	    entity,
+	    	    SubCategoryDTO[].class,
+	    	    category
+	    	);
+
+	    	List<SubCategoryDTO> subcategories = Arrays.asList(response.getBody());
+	    	return subcategories;
+
 	    }
 
-		public SubCategoryDTO getSubCategoryByName(String subcategoryName) {
+		public SubCategoryDTO getSubCategoryByName(String subcategoryName, String token) {
 			String url = "http://localhost:8080/api/subcategories/subcategory/{subcategoryName}";
-	        SubCategoryDTO subcategories = restTemplate.getForObject(url, SubCategoryDTO.class , subcategoryName);
-	        return subcategories;
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			HttpEntity<String> entity = new HttpEntity<>(headers);
+
+			ResponseEntity<SubCategoryDTO> response = restTemplate.exchange(
+			    url,
+			    HttpMethod.GET,
+			    entity,
+			    SubCategoryDTO.class,
+			    subcategoryName
+			);
+
+			SubCategoryDTO subcategories = response.getBody();
+			return subcategories;
+
 		}
 }
