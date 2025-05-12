@@ -9,9 +9,11 @@ import com.elecxa.service.OrderService;
 import com.elecxa.service.ProductService;
 import com.elecxa.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 
 @Controller
-@RequestMapping("/admin")
 public class DashboardController {
 
     @Autowired
@@ -24,17 +26,29 @@ public class DashboardController {
     private UserService userService;
 
     @GetMapping("/dashboard")
-    public String showDashboard(Model model) {
-        model.addAttribute("totalRevenue", orderService.getTotalRevenue());
-        model.addAttribute("totalOrders", orderService.getTotalOrderCount());
-        model.addAttribute("totalProducts", productService.getTotalProductCount());
-        model.addAttribute("totalCustomers", userService.getTotalCustomerCount());
-        
-        model.addAttribute("recentOrders", orderService.getRecentOrders());
-    //  model.addAttribute("topProducts", productService.getTopSellingProducts());
-        
-        model.addAttribute("revenueData", orderService.getRevenueChartData());
+    public String showDashboard(Model model ,HttpSession session,HttpServletRequest request) {
+    	
+    	
+    	if (session.getAttribute("darkMode") == null) {
+			session.setAttribute("darkMode", false);
+		}
+		if (session.getAttribute("sidebarCollapsed") == null) {
+			session.setAttribute("sidebarCollapsed", false);
+		}
+		model.addAttribute("currentUri", request.getRequestURI());
 
+		String token = (String) session.getAttribute("accessToken");
+        model.addAttribute("totalRevenue", orderService.getTotalRevenue(token));
+        System.out.println("total : " + orderService.getTotalRevenue(token));
+        model.addAttribute("totalOrders", orderService.getTotalOrderCount(token));
+        model.addAttribute("totalProducts", productService.getTotalProductCount(token));
+        model.addAttribute("totalCustomers", userService.getTotalCustomerCount(token));
+        
+        model.addAttribute("recentOrders", orderService.getRecentOrders(token));
+        model.addAttribute("topProducts", productService.getTopSellingProducts(token));
+        
+        model.addAttribute("revenueData", orderService.getRevenueChartData(token));
+ 
         return "admin/dashboard"; // your Thymeleaf path
     }
 }

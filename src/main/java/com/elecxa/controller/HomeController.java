@@ -38,8 +38,8 @@ public class HomeController {
         return "user/index"; 
     }
     
-    @GetMapping("login/{id}/{token}")
-    public String showHomePage1(@PathVariable int id ,@PathVariable String token, Model model  , HttpSession session) {
+    @GetMapping("/login")
+    public String showHomePage1(@RequestParam int id ,@RequestParam String token, Model model  , HttpSession session) {
     	
     	 Integer userId = id;
          session.setAttribute("accessToken", token);
@@ -50,6 +50,15 @@ public class HomeController {
     
     @GetMapping("/signin")
     public String showLoginPage(Model model) {
+        return "user/sign-in"; 
+    }
+    
+    
+    @GetMapping("/logout")
+    public String redirectLoginPage(Model model , HttpSession session) {
+    	session.removeAttribute("accessToken");
+    	session.removeAttribute("userId");
+
         return "user/sign-in"; 
     }
 

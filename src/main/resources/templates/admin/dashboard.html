@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout(~{::title}, ~{::section})}">  
+	th:replace="~{admin/layout :: layout(~{::title}, ~{::section})}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -121,7 +121,7 @@
                     </div>
                     <div class="card-body">
                         <div class="chart-container">
-                            <canvas id="revenueChart" th:data-chart="${#strings.replace(#objects.nullSafe(#strings.escapeJavaScript(#objects.nullSafe(#jsonUtils.toJson(revenueData), '{}')), '{}'), '&quot;', '\\&quot;')}"></canvas>
+                        <!--     <canvas id="revenueChart" th:data-chart='${#json.toJson(revenueData)}'></canvas> -->
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="card-body">
                         <div class="chart-container">
-                            <canvas id="customerChart" th:data-chart="${#strings.replace(#objects.nullSafe(#strings.escapeJavaScript(#objects.nullSafe(#jsonUtils.toJson(customerData), '{}')), '{}'), '&quot;', '\\&quot;')}"></canvas>
+                          <!--   <canvas id="customerChart" th:data-chart="${#strings.replace(#objects.nullSafe(#strings.escapeJavaScript(#objects.nullSafe(#jsonUtils.toJson(customerData), '{}')), '{}'), '&quot;', '\\&quot;')}"></canvas>  -->
                         </div>
                         <div class="mt-4 text-center small">
                             <span class="me-2">
@@ -184,16 +184,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="order : ${recentOrders}" th:onclick="'window.location.href=\'' + @{/orders/{id}(id=${order.id})} + '\''"
+                                    <tr th:each="order : ${recentOrders}" th:onclick="'window.location.href=\'' + @{/orders/{id}(id=${order.orderId})} + '\''"
                                         class="cursor-pointer">
-                                       66 <td th:text="${order.id}">1001</td>
+                                       <td th:text="${order.orderId}">1001</td>
                                         <td th:text="${order.customerName}">John Doe</td>
-                                        <td th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy')}">01 Jun 2023</td>
+                                        <td th:text="${#temporals.format(order.orderedDate, 'dd MMM yyyy')}">01 Jun 2023</td>
                                         <td>
-                                            <span th:class="${'badge bg-' + (order.status == 'Pending' ? 'warning' : 
-                                                                order.status == 'Shipped' ? 'info' : 
-                                                                order.status == 'Delivered' ? 'success' : 'danger')}"
-                                                  th:text="${order.status}">Pending</span>
+                                            <span th:class="${'badge bg-' + (order.orderStatus == 'Pending' ? 'warning' : 
+                                                                order.orderStatus == 'Shipped' ? 'info' : 
+                                                                order.orderStatus == 'Delivered' ? 'success' : 'danger')}"
+                                                  th:text="${order.orderStatus}">Pending</span>
                                         </td>
                                         <td th:text="${#numbers.formatCurrency(order.totalAmount)}">$199.99</td>
                                     </tr>
@@ -223,15 +223,15 @@
                                         <p class="card-text text-truncate-2" th:text="${product.description}">Product description goes here.</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="font-weight-bold" th:text="${#numbers.formatCurrency(product.price)}">$799.99</span>
-                                            <span class="badge bg-success" th:if="${product.inStock}">In Stock</span>
-                                            <span class="badge bg-danger" th:unless="${product.inStock}">Out of Stock</span>
+                                            <span class="badge bg-success" th:if="${product.stockQuantity > 0}">In Stock</span>
+                                            <span class="badge bg-danger" th:unless="${product.stockQuantity > 0}">Out of Stock</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt-3">
-                            <a th:href="@{/products}" class="btn btn-sm btn-primary">View All Products</a>
+                            <a th:href="@{/product}" class="btn btn-sm btn-primary">View All Products</a>
                         </div>
                     </div>
                 </div>
@@ -244,7 +244,7 @@
         <script th:inline="javascript">
             document.addEventListener('DOMContentLoaded', function() {
                 // Prepare data for Revenue Chart
-                const revenueData = /*[[${revenueData}]]*/ [];
+                const revenueData = /*[[${#json.toJson(revenueData)}]]*/ [];
                 const revenueChartData = {
                     labels: [],
                     thisYear: [],

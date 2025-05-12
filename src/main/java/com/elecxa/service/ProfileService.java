@@ -27,11 +27,17 @@ public class ProfileService {
 
     public UserDTO getUserProfile(long id, String token) {
         String BACKEND_URL = "http://localhost:8080/api/user/{id}";
-        
+        HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.setBearerAuth(token);
+    	
+    	
+    	HttpEntity<String> entity = new HttpEntity<>(headers);
+
         ResponseEntity<UserDTO> response = restTemplate.exchange(
                 BACKEND_URL,
                 HttpMethod.GET,
-                null,
+                entity,
                 UserDTO.class,
                 id
         );
@@ -43,6 +49,7 @@ public class ProfileService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(token);
 
         HttpEntity<UserDTO> entity = new HttpEntity<>(userProfile, headers);
 
