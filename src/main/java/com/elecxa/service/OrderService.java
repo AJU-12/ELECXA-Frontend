@@ -83,12 +83,11 @@ public class OrderService {
         HttpEntity<OrderDTO> entity = new HttpEntity<>(orderDTO, headers);
 
         ResponseEntity<OrderDTO> response = restTemplate.exchange(
-            BASE_URL,
+        	BASE_URL + "/place",
             HttpMethod.POST,
             entity,
             OrderDTO.class
         );
-
         return response.getBody();
     }
 
@@ -186,8 +185,8 @@ public class OrderService {
         return response.getBody();
     }
 
-    // ✅ Get orders by status for filtering
     public List<OrderDTO> getOrdersByStatus(String status ,  String token) {
+
         String url = BASE_URL + "/status/{status}";
         
         HttpHeaders headers = new HttpHeaders();
@@ -206,6 +205,7 @@ public class OrderService {
         );
         return response.getBody();
     }
+
     public void updateOrderStatus(Long orderId, String status , String token) {
         String url = BASE_URL + "/{id}/status?status={status}";
         
@@ -225,5 +225,4 @@ public class OrderService {
                 status
             );    
         }
-
 }
