@@ -2,7 +2,6 @@ package com.elecxa.controller;
 
 import com.elecxa.dto.OrderDTO;
 import com.elecxa.service.OrderService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +18,16 @@ public class OrderController {
 
     @GetMapping
     public String viewAllOrders(Model model,
-                                 @RequestParam(value = "status", required = false, defaultValue = "All") String status) {
-        List<OrderDTO> orders = status.equals("All")
-                                ? orderService.getAllOrders()
-                                : orderService.getOrdersByStatus(status);
+                                @RequestParam(value = "status", required = false, defaultValue = "All") String status) {
+
+        List<OrderDTO> orders = status.equalsIgnoreCase("All")
+                ? orderService.getAllOrders()
+                : orderService.getOrdersByStatus(status.toUpperCase());
 
         model.addAttribute("orders", orders);
         model.addAttribute("statuses", List.of("All", "PLACED", "PENDING", "SHIPPED", "DELIVERED", "CANCELLED"));
-        model.addAttribute("selectedStatus", status);
-        return "admin/orders";  // Thymeleaf template
+        model.addAttribute("selectedStatus", status.toUpperCase());
+        return "admin/orders";
     }
 
     @GetMapping("/{id}")
@@ -42,9 +42,9 @@ public class OrderController {
 
     @GetMapping("/{id}/update-status")
     public String updateOrderStatus(@PathVariable Long id,
-                                     @RequestParam("status") String status,
-                                     @RequestParam(value = "filter", required = false, defaultValue = "All") String filter) {
-        orderService.updateOrderStatus(id, status);
+                                    @RequestParam("status") String status,
+                                    @RequestParam(value = "filter", defaultValue = "All") String filter) {
+        orderService.updateOrderStatus(id, status.toUpperCase());
         return "redirect:/orders?status=" + filter;
     }
 
