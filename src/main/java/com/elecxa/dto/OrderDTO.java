@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class OrderDTO {
     private Long orderId;
-    private Long userId;
-    private Long productId;
+    private UserDTO user;
+    private ProductDTO product;
     private BigDecimal totalAmount;
     private String orderStatus;
     private LocalDateTime orderedDate;

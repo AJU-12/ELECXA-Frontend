@@ -214,8 +214,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		// Function to update popular products
 		async function updatePopularProducts() {
+			let token = sessionStorage.getItem("accessToken");
 
-			let response = await fetch('http://localhost:8080/api/products/popularproducts')
+			let response = await fetch('http://localhost:8080/api/products/popularproducts', {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`
+				},
+			})
 
 			products = await response.json();
 

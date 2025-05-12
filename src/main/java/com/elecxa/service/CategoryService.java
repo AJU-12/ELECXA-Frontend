@@ -29,7 +29,7 @@ public class CategoryService {
 
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-
+    	headers.setBearerAuth(token);
     	HttpEntity<String> entity = new HttpEntity<>(headers);
 
     	ResponseEntity<CategoryDTO[]> response = restTemplate.exchange(
@@ -49,6 +49,7 @@ public class CategoryService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.setBearerAuth(token);
 
 		HttpEntity<String> entity = new HttpEntity<>(headers);
 
@@ -71,6 +72,7 @@ public class CategoryService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.setBearerAuth(token);
 
 		HttpEntity<String> entity = new HttpEntity<>(headers);
 

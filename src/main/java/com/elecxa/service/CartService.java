@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -26,10 +27,17 @@ public class CartService {
     // Get the current cart
     public CartDTO getCart(long id, String token) {
         // Make GET request to fetch cart details
+    	
+    	HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		headers.setBearerAuth(token);
+		HttpEntity<CartDTO> entity = new HttpEntity<>(headers);
+
         ResponseEntity<CartDTO> response = restTemplate.exchange(
                 BASE_URL + "{id}", // Endpoint to fetch cart data
                 HttpMethod.GET,
-                null,
+                entity,
                 CartDTO.class,
                 id
         );
@@ -38,8 +46,12 @@ public class CartService {
 
     // Add item to the cart
     public void addItemToCart(CartItemDTO cartItem , String token) {
-        // Make POST request to add an item to the cart
-        HttpEntity<CartItemDTO> entity = new HttpEntity<>(cartItem, new HttpHeaders());
+    	HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		headers.setBearerAuth(token);
+
+        HttpEntity<CartItemDTO> entity = new HttpEntity<>(cartItem, headers);
         restTemplate.exchange(
                 BASE_URL + "/add", // Endpoint to add item to cart
                 HttpMethod.POST,
@@ -55,12 +67,17 @@ public class CartService {
                 .queryParam("itemId", itemId)
                 .queryParam("action", action)
                 .toUriString();
+        HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		headers.setBearerAuth(token);
+		HttpEntity<String> entity = new HttpEntity<>(headers);
 
         // Make PUT request to update item quantity
         restTemplate.exchange(
                 url, // Endpoint to update item quantity
                 HttpMethod.PUT,
-                null,
+                entity,
                 Void.class
         );
     }
@@ -69,12 +86,17 @@ public class CartService {
     public void removeItem(Long itemId, String token) {
         // Prepare the request URL
         String url = BASE_URL + "/remove/{itemId}";
-        
+        HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		headers.setBearerAuth(token);
+		HttpEntity<String> entity = new HttpEntity<>(headers);
+
         // Make DELETE request to remove item from cart
         restTemplate.exchange(
                 url, // Endpoint to remove item from cart
                 HttpMethod.DELETE,
-                null,
+                entity,
                 Void.class,
                 itemId
         );
@@ -83,11 +105,18 @@ public class CartService {
 	public List<CartItemDTO> getCartItems(Long cartId, String token) {
 		
 	    String url = "http://localhost:8080/api/cart/cartitem/";
+	    
+	    HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		headers.setBearerAuth(token);
+		HttpEntity<String> entity = new HttpEntity<>(headers);
+
 	    // Use RestTemplate.exchange() with the appropriate type
 	    ResponseEntity<List<CartItemDTO>> response = restTemplate.exchange(
 	            url + "{cartId}",  
 	            HttpMethod.GET,
-	            null,                   
+	            entity,                   
 	            new ParameterizedTypeReference<List<CartItemDTO>>() {},          
 	            cartId                 
 	    );
@@ -98,11 +127,16 @@ public class CartService {
 	public void updateCart(Long productId, Long userId, String token) {
 		
         String url = BASE_URL + "/add/{productId}/{userId}" ;
+        HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		headers.setBearerAuth(token);
+		HttpEntity<String> entity = new HttpEntity<>(headers);
 
 	        restTemplate.exchange(
 	                url,
 	                HttpMethod.POST,
-	                null,
+	                entity,
 	                Void.class,
 	                productId,
 	                userId

@@ -16,6 +16,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
 	rel="stylesheet">
+
 </head>
 
 <body>
@@ -391,12 +392,19 @@
                 console.error('Category list element not found');
                 return;
             }
-            
+            let token = sessionStorage.getItem("accessToken");
+
             console.log('Fetching categories...');
 
             const category = new URLSearchParams(window.location.search).get("category");
 
-            const response = await fetch(`http://localhost:8080/api/subcategories/category/${category}`);
+            const response = await fetch(`http://localhost:8080/api/subcategories/category/${category}` ,{
+            	  method: "GET",
+                  headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": `Bearer ${token}`
+                  },
+            });
             let subCategories = await response.json();
             displayCategories(subCategories);
 
@@ -431,8 +439,15 @@
                     if (breadcrumbCategory) {
                         breadcrumbCategory.textContent = category.name;
                     }
-                    
-                    const response = await fetch(`http://localhost:8080/api/products/subcategory/subcategoryName/${category.name}`); // Adjust URL
+                    let token = sessionStorage.getItem("accessToken");
+
+                    const response = await fetch(`http://localhost:8080/api/products/subcategory/subcategoryName/${category.name}` ,{
+                    	  method: "GET",
+                          headers: {
+                              "Content-Type": "application/json",
+                              "Authorization": `Bearer ${token}`
+                          },
+                    }); 
                     const products = await response.json();
 
                     const container = document.getElementsByClassName("products-grid")[0];

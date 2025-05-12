@@ -27,6 +27,7 @@ public class SubCategoryService {
 
 	    	HttpHeaders headers = new HttpHeaders();
 	    	headers.setContentType(MediaType.APPLICATION_JSON);
+	        headers.setBearerAuth(token);
 
 	    	HttpEntity<String> entity = new HttpEntity<>(headers);
 
@@ -46,6 +47,7 @@ public class SubCategoryService {
 
 	    	HttpHeaders headers = new HttpHeaders();
 	    	headers.setContentType(MediaType.APPLICATION_JSON);
+	        headers.setBearerAuth(token);
 
 	    	HttpEntity<String> entity = new HttpEntity<>(headers);
 
@@ -67,6 +69,7 @@ public class SubCategoryService {
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
+	        headers.setBearerAuth(token);
 
 			HttpEntity<String> entity = new HttpEntity<>(headers);
 

@@ -13,7 +13,8 @@ async function checkUserExists(credential) {
 	const response = await fetch(`http://localhost:8080/auth/login/${credential}`, {
 		method: "GET",
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
+
 		}
 	});
 
@@ -173,10 +174,12 @@ async function showPasswordScreen(identifier) {
 
 	// Setup OTP button - show OTP verification screen when clicked
 	document.querySelector('.sign-in-otp-button').addEventListener('click', async () => {
+
 		const response = await fetch(`http://localhost:8080/api/customer/otp/send?phoneNumber=+91${identifier.trim()}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
+
 			},
 		});
 		showVerificationScreen(identifier);
@@ -496,7 +499,8 @@ async function handleSignInClick(identifier) {
 	const response = await fetch(`http://localhost:8080/auth/password/${identifier}/${passwordInput}`, {
 		method: "GET",
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
+
 		}
 	});
 	
@@ -530,10 +534,8 @@ async function handleSignInClick(identifier) {
 		let data1 = await response1.json();
 		sessionStorage.setItem("cartId", data1.cartId);
 
-		setTimeout(() => {
 
-			window.location.href = `login/${sessionStorage.getItem('userId')}/${sessionStorage.getItem('accessToken')}`;
-		}, 1500);
+			window.location.href = `/login?id=${sessionStorage.getItem('userId')}&token=${sessionStorage.getItem('accessToken')}`;
 	}
 }
 

@@ -19,17 +19,24 @@ public class UserService {
 
     private static final String BASE_URL = "http://localhost:8080/api/user";
 
-    public List<UserDTO> getAllUsers() {
+    public List<UserDTO> getAllUsers(String token) {
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.setBearerAuth(token);
+    	
+    	
+    	HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<List<UserDTO>> response = restTemplate.exchange(
             BASE_URL,
             HttpMethod.GET,
-            null,
+            entity,
             new ParameterizedTypeReference<List<UserDTO>>() {}
         );
         return response.getBody();
     }
 
-    public UserDTO getUserById(Long id) {
+    public UserDTO getUserById(Long id , String token) {
         String url = BASE_URL + "/{id}";
         ResponseEntity<UserDTO> response = restTemplate.exchange(
             url,
@@ -50,9 +57,16 @@ public class UserService {
         return response.getBody();
     }
 
-    public UserDTO updateUser(Long id, UserDTO userDTO) {
+    public UserDTO updateUser(Long id, UserDTO userDTO , String token) {
         String url = BASE_URL + "/update/{id}";
-        HttpEntity<UserDTO> entity = new HttpEntity<>(userDTO);
+        
+        HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.setBearerAuth(token);
+    	
+    	
+
+        HttpEntity<UserDTO> entity = new HttpEntity<>(userDTO , headers);
 
         ResponseEntity<UserDTO> response = restTemplate.exchange(
             url,
@@ -106,12 +120,18 @@ public class UserService {
         return response.getBody();
     }
 
-    public List<UserDTO> getUsersByRole(String roleName) {
+    public List<UserDTO> getUsersByRole(String roleName , String token) {
         String url = BASE_URL + "/role/{roleName}";
+        HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.setBearerAuth(token);
+    	
+    	
+    	HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<List<UserDTO>> response = restTemplate.exchange(
             url,
             HttpMethod.GET,
-            null,
+            entity,
             new ParameterizedTypeReference<List<UserDTO>>() {},
             roleName
         );
@@ -129,13 +149,19 @@ public class UserService {
         );
         return response.getBody();
     }
-    public Long getTotalCustomerCount() {
+    public Integer getTotalCustomerCount(String token) {
         String url = BASE_URL + "/count";  
-        ResponseEntity<Long> response = restTemplate.exchange(
+        HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.setBearerAuth(token);
+    	
+    	
+    	HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<Integer> response = restTemplate.exchange(
             url,
             HttpMethod.GET,
-            null,
-            Long.class
+            entity,
+            Integer.class
         );
         return response.getBody();
     }

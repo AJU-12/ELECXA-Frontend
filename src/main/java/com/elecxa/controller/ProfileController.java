@@ -1,5 +1,8 @@
 package com.elecxa.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -14,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.elecxa.dto.AddressDTO;
+import com.elecxa.dto.OrderDTO;
 import com.elecxa.dto.UserDTO;
 import com.elecxa.service.AddressService;
+import com.elecxa.service.OrderService;
 import com.elecxa.service.ProfileService;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,11 +33,14 @@ public class ProfileController {
     private ProfileService profileService;
     
     @Autowired
+    private OrderService orderService;
+    
+    @Autowired
     private AddressService addressService;
 
     
     @GetMapping
-    public String showProfile(Model model , @RequestParam int id , HttpSession session) {
+    public String showProfile(Model model , @RequestParam long id , HttpSession session) {
     	String token = (String)session.getAttribute("accessToken");
 
         UserDTO userProfile = profileService.getUserProfile(id , token);
@@ -40,6 +48,21 @@ public class ProfileController {
         model.addAttribute("address", userAddress);
         model.addAttribute("userProfile", userProfile);
         model.addAttribute("activeTab", "profile");
+        
+        
+        List<OrderDTO> order = orderService.getOrdersByCustomerId(id, token);
+      
+        
+        model.addAttribute("ordersCount", order.size());
+        model.addAttribute("orders", order);
+        model.addAttribute("confirmationTitle", "Thank You for Your Order!");
+        model.addAttribute("confirmationMessage", "Your order has been received and is being processed.");
+        model.addAttribute("emailConfirmation", "An email confirmation has been sent to your registered email address.");
+        List<String> orderSteps = Arrays.asList("Order Placed", "Packed", "Shipped", "Out for Delivery", "Delivered");
+        String currentStep = "Shipped"; // Get this from DB dynamically
+
+        model.addAttribute("orderSteps", orderSteps);
+        model.addAttribute("currentStep", currentStep);
         
         return "user/profile-new";
     }

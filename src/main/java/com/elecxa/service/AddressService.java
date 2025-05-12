@@ -28,6 +28,7 @@ public class AddressService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
+		headers.setBearerAuth(token);
 		HttpEntity<String> entity = new HttpEntity<>(headers);
 
 		ResponseEntity<AddressDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, AddressDTO.class, id);
@@ -40,6 +41,7 @@ public class AddressService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setBearerAuth(token);
 
 		HttpEntity<AddressDTO> entity = new HttpEntity<>(userAddress, headers);
 

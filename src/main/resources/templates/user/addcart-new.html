@@ -302,7 +302,7 @@
                     
                         <h3 th:text="${item.product.name}" class="cart-item-title">SAMSUNG Galaxy S24 Ultra 5G (12GB RAM, 256GB, Titanium Gray)</h3>
                         <p class="cart-item-price">
-                            ₹<span th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}">1,10,999</span>
+                            ₹<span th:text="${#numbers.formatDecimal(item.product.price - ((item.product.discount/100)* item.product.price), 0, 'COMMA', 0, 'POINT')}">1,10,999</span>
                             <span th:if="${item.price >= 0}" class="cart-item-original-price">₹<span th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}">1,25,999</span></span>
                         </p>
                         

@@ -332,9 +332,14 @@
         async function initiatePayment(amount) {
         	const uid = sessionStorage.getItem("userId");
         	const cid = sessionStorage.getItem("cartId");
+        	 let token = sessionStorage.getItem("accessToken");
 
             await fetch(`http://localhost:8080/api/payments/initiate?amount=${amount}`, {
-                method: 'POST'
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
             })
             .then(response => response.json())
             .then(data => {
@@ -346,11 +351,11 @@
                     description: "Electronics Purchase",
                     order_id: data.orderId,
                     handler: async function (response) {
-                        alert('Payment successful! ID: ' + response.razorpay_payment_id);
-                        let response1 = await fetch(`http://localhost:8080/api/orders/place?userId=${uid}&cartId=${cid}&totalAmount=${amount}`,{
+                        let response1 = await fetch(`http://localhost:8080/api/orders/place?userId=${uid}&cartId=${cid}&totalAmount=${amount}&productId=-1`,{
                         	method:"POST",
                         	 headers: {
-                     	        "Content-Type": "application/json"
+                     	        "Content-Type": "application/json",
+                                "Authorization": `Bearer ${token}`
                      	    }
                         })
                         
@@ -359,7 +364,8 @@
                         await fetch(`http://localhost:8080/api/payments/save?razorpayOrderId=${response.razorpay_payment_id}&amount=${amount}&userId=${uid}&orderId=${orderInfo.orderId}`,{
                         	method:"POST",
                         	 headers: {
-                        	        "Content-Type": "application/json"
+                        	        "Content-Type": "application/json",
+                                    "Authorization": `Bearer ${token}`
                         	    }
                         })
                     },
